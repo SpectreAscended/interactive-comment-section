@@ -1,0 +1,7 @@
+@mixin bp-mobile {
+  min-width: 375px;
+}
+
+@mixin bp-desktop {
+  min-width: 1440px;
+}
