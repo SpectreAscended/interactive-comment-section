@@ -1,0 +1,23 @@
+.count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-light-gray);
+  max-width: 2rem;
+  margin: 1.5rem;
+  border-radius: 0.5rem;
+  gap: 0.5rem;
+
+  &__display {
+    color: var(--color-moderate-blue);
+    font-weight: 500;
+  }
+
+  &__btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--color-light-grayish-blue);
+  }
+}
