@@ -1,0 +1,36 @@
+.comment-card {
+  max-width: 60rem;
+  border-radius: 1rem;
+  background-color: var(--color-white);
+  display: flex;
+  margin: 1rem auto;
+  color: var(--color-grayish-blue);
+  &__content {
+    flex-basis: 90%;
+  }
+
+  &__user-data {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    &--img {
+      max-width: 3rem;
+    }
+
+    &--username {
+      color: var(--color-dark-blue);
+      font-weight: 500;
+      margin-right: 1rem;
+    }
+  }
+
+  &__reply {
+    margin-left: auto;
+    background-color: transparent;
+    border: none;
+    color: var(--color-moderate-blue);
+    font-weight: 500;
+    cursor: pointer;
+  }
+}
