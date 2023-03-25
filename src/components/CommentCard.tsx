@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import Counter from './UI/Counter';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faReply } from '@fortawesome/free-solid-svg-icons';
+
 import './commentCard.scss';
 
 interface CommentCardProps {
@@ -46,7 +49,10 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
           <span className="comment-card__user-data--created-at">
             {comment.createdAt}
           </span>
-          <button className="comment-card__reply">Reply</button>
+          <button className="comment-card__reply">
+            <FontAwesomeIcon icon={faReply} style={{ marginRight: '.5rem' }} />
+            Reply
+          </button>
         </div>
         <p className="comment-card__comment-body">{comment.content}</p>
       </div>
