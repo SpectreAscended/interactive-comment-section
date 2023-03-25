@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import './counter.scss';
 
-const Counter: React.FC = () => {
-  const [count, setCount] = useState(0);
+interface CounterProps {
+  defaultCount: number;
+}
+
+const Counter: React.FC<CounterProps> = ({ defaultCount }) => {
+  const [count, setCount] = useState(defaultCount);
 
   const increaseCount = () => {
     setCount(prevCount => prevCount + 1);

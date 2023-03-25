@@ -6,9 +6,15 @@ const App: React.FC = () => {
 
   return (
     <main>
-      {data.map(comment => {
-        return <CommentCard comment={comment} />;
-      })}
+      <ul>
+        {data.map(comment => {
+          return (
+            <li key={comment.id}>
+              <CommentCard comment={comment} />;
+            </li>
+          );
+        })}
+      </ul>
     </main>
   );
 };

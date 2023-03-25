@@ -26,7 +26,6 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
     const fetchImage = async () => {
       try {
         const res = await import(`${comment.user.image.png}`);
-        console.log(res.default);
         setImage(res.default);
       } catch (err) {}
     };
@@ -35,14 +34,11 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
 
   return (
     <article className="comment-card">
-      <Counter />
+      <Counter defaultCount={comment.score} />
       <div className="comment-card__content">
         <div className="comment-card__user-data">
           <figure className="comment-card__user-data--img">
-            <img
-              src={image}
-              alt={`${comment.user.username} user image`}
-            />
+            <img src={image} alt={`${comment.user.username} user image`} />
           </figure>
           <span className="comment-card__user-data--username">
             {comment.user.username}
