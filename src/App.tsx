@@ -10,7 +10,7 @@ const App: React.FC = () => {
         {data.map(comment => {
           return (
             <li key={comment.id}>
-              <CommentCard comment={comment} />;
+              <CommentCard comment={comment} />
             </li>
           );
         })}
