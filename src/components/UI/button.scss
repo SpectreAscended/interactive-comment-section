@@ -1,0 +1,16 @@
+.button {
+  border: none;
+  background-color: var(--color-moderate-blue);
+  color: var(--color-very-light-gray);
+  padding: 1rem 1.75rem;
+  border-radius: 0.45rem;
+  cursor: pointer;
+  transition: background 250ms;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 1rem;
+
+  &:hover {
+    background: lighten(hsl(238, 40%, 52%), 20%);
+  }
+}

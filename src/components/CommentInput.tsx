@@ -1,4 +1,5 @@
 import userImage from '../assets/avatars/image-juliusomo.png';
+import Button from './UI/Button';
 import './commentInput.scss';
 
 const CommentInput: React.FC = () => {
@@ -14,9 +15,7 @@ const CommentInput: React.FC = () => {
           className="comment-input__input"
           rows={3}
         />
-        <button type="submit" className="comment-input__btn">
-          Send
-        </button>
+        <Button onClick={() => {}}>Send</Button>
       </div>
     </form>
   );
