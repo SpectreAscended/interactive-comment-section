@@ -1,4 +1,5 @@
 import CommentCard from './components/CommentCard';
+import CommentInput from './components/CommentInput';
 import DUMMY_DATA from './store/DUMMY_DATA';
 
 const App: React.FC = () => {
@@ -15,6 +16,7 @@ const App: React.FC = () => {
           );
         })}
       </ul>
+      <CommentInput />
     </main>
   );
 };
