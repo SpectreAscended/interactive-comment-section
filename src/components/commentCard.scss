@@ -1,9 +1,11 @@
 .comment-card {
-  max-width: 50rem;
+  // max-width: 50rem;
   border-radius: 1rem;
   background-color: var(--color-white);
   display: flex;
   margin: 1rem auto;
+  padding: 0.5rem;
+  padding-bottom: 1rem;
   color: var(--color-grayish-blue);
   &__content {
     flex-basis: 90%;
