@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import Button from './UI/Button';
 import './header.scss';
 
@@ -6,9 +7,9 @@ const Header: React.FC = () => {
     <header className="header">
       <nav className="header__nav">
         <ul>
-          <li className="header__list--item">
+          <NavLink to="login" className="header__list--item">
             <Button onClick={() => {}}>Log in</Button>
-          </li>
+          </NavLink>
         </ul>
       </nav>
     </header>
