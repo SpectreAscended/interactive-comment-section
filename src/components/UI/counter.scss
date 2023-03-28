@@ -1,3 +1,5 @@
+@import '../../styles/mixins.scss';
+
 .count {
   display: flex;
   flex-direction: column;
@@ -21,5 +23,11 @@
     border: none;
     cursor: pointer;
     color: var(--color-light-grayish-blue);
+  }
+
+  @media screen and (max-width: 37.5em) {
+    .count {
+      flex-direction: row;
+    }
   }
 }

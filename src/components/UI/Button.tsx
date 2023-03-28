@@ -16,7 +16,7 @@ const Button: React.FC<ButtonProps> = ({
   let buttonClasses = 'button button--primary';
 
   if (variant === 'secondary') {
-    buttonClasses = 'button button-secondary';
+    buttonClasses = 'button button--secondary';
   }
 
   return (
