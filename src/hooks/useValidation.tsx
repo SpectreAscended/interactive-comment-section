@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-const useValidation = (validation: () => boolean) => {
+const useValidation = (validation: (a: string) => boolean) => {
   const [inputValue, setInputValue] = useState('');
   const [interacted, setInteracted] = useState(false);
 
-  const inputIsValid = validation;
+  const inputIsValid = validation(inputValue);
 
   const hasError = interacted && !inputIsValid;
 
@@ -13,9 +13,14 @@ const useValidation = (validation: () => boolean) => {
     setInputValue(e.currentTarget.value);
   };
 
+  const inputBlurHandler = () => {
+    setInteracted(true);
+  };
+
   return {
     inputValue,
     inputValueHandler,
+    inputBlurHandler,
     hasError,
   };
 };

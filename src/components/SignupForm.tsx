@@ -1,9 +1,22 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from './UI/Button';
+import useValidation from '../hooks/useValidation';
 import './authForm.scss';
 
+const nameValidation = (input: string) => {
+  return input.trim().length > 0;
+};
+
 const SignupForm: React.FC = () => {
+  const {
+    inputValue: nameInputValue,
+    inputValueHandler: nameValueHandler,
+    inputBlurHandler: nameBlurHandler,
+    hasError: nameHasError,
+  } = useValidation(nameValidation);
+
+  console.log(nameHasError);
+
   return (
     <section>
       <form className="auth-form">
@@ -16,6 +29,9 @@ const SignupForm: React.FC = () => {
           name="username"
           id="username"
           className="auth-form__input"
+          value={nameInputValue}
+          onChange={nameValueHandler}
+          onBlur={nameBlurHandler}
         />
         <label htmlFor="email" className="auth-form__label">
           Email
