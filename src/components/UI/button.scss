@@ -1,7 +1,6 @@
 .button {
   border: none;
-  background-color: var(--color-moderate-blue);
-  color: var(--color-very-light-gray);
+
   padding: 1rem 1.75rem;
   border-radius: 0.45rem;
   cursor: pointer;
@@ -10,7 +9,23 @@
   font-weight: 400;
   font-size: 1rem;
 
-  &:hover {
-    background: lighten(hsl(238, 40%, 52%), 20%);
+  &--primary {
+    background-color: var(--color-moderate-blue);
+    color: var(--color-very-light-gray);
+
+    &:hover {
+      background: lighten(hsl(238, 40%, 52%), 20%);
+    }
+  }
+
+  &--secondary {
+    background-color: transparent;
+    color: var(--color-moderate-blue);
+    transition: color 250ms;
+
+    &:hover {
+      background-color: var(--color-moderate-blue);
+      color: var(--color-very-light-gray);
+    }
   }
 }

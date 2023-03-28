@@ -7,9 +7,18 @@ const Header: React.FC = () => {
     <header className="header">
       <nav className="header__nav">
         <ul>
-          <NavLink to="login" className="header__list--item">
-            <Button onClick={() => {}}>Log in</Button>
-          </NavLink>
+          <li>
+            <NavLink to="/">
+              <Button onClick={() => {}} variant="secondary">
+                Home
+              </Button>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="login" className="header__list--item">
+              <Button onClick={() => {}}>Log in</Button>
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </header>
