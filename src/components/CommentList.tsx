@@ -2,7 +2,7 @@ import CommentCard from './CommentCard';
 import CommentInput from './CommentInput';
 import DUMMY_DATA from '../store/DUMMY_DATA';
 
-const CommentList = () => {
+const CommentList: React.FC = () => {
   const data = DUMMY_DATA;
 
   return (

@@ -1,5 +1,5 @@
 import Header from '../components/Header';
-const ErrorBoundary = () => {
+const ErrorBoundary: React.FC = () => {
   return (
     <>
       <Header />

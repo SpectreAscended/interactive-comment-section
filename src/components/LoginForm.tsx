@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Button from './UI/Button';
 import './authForm.scss';
 
-const LoginForm = () => {
+const LoginForm: React.FC = () => {
   return (
     <section>
       <form className="auth-form">
