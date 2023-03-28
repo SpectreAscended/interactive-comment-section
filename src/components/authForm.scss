@@ -20,8 +20,18 @@
 
   &__actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     gap: 4rem;
+    margin-top: 4rem;
+  }
+
+  &__link {
+    text-decoration: underline;
+    transition: color 250ms ease-in-out;
+
+    &:hover {
+      color: var(--color-moderate-blue);
+    }
   }
 }
