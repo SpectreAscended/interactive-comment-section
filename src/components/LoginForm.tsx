@@ -15,6 +15,7 @@ const LoginForm: React.FC = () => {
           name="email"
           id="email"
           className="auth-form__input"
+          autoComplete="email"
         />
         <label htmlFor="password" className="auth-form__label">
           Password

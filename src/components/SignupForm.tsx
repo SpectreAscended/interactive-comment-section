@@ -92,6 +92,7 @@ const SignupForm: React.FC = () => {
           type="text"
           name="username"
           id="username"
+          autoComplete="username"
           className={nameClasses}
           value={nameInputValue}
           onChange={nameValueHandler}
@@ -107,6 +108,7 @@ const SignupForm: React.FC = () => {
           type="email"
           name="email"
           id="email"
+          autoComplete="email"
           className={emailClasses}
           value={emailInputValue}
           onChange={emailValueHandler}
