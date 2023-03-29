@@ -57,4 +57,23 @@
       margin-top: 0.5rem;
     }
   }
+
+  &__btn {
+    padding: 1rem 1.75rem;
+    border-radius: 0.45rem;
+    cursor: pointer;
+
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 1rem;
+    background-color: transparent;
+    border: 1px solid var(--color-moderate-blue);
+    color: var(--color-moderate-blue);
+    transition: color 250ms, background 250ms;
+
+    &:hover {
+      background-color: var(--color-moderate-blue);
+      color: var(--color-very-light-gray);
+    }
+  }
 }

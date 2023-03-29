@@ -4,6 +4,7 @@ import useValidation, { emailValidation } from '../hooks/useValidation';
 import Button from './UI/Button';
 import { auth } from '../firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
+import { REDIRECT_TIMER } from '../appConfig';
 import './authForm.scss';
 
 const ResetPasswordForm: React.FC = () => {
@@ -39,7 +40,7 @@ const ResetPasswordForm: React.FC = () => {
       resetEmailInput();
       setTimeout(() => {
         navigate('/login');
-      }, 5000);
+      }, REDIRECT_TIMER);
     } catch (err) {
       if (err instanceof Error) {
         const errorWithCode = err as { code?: string };

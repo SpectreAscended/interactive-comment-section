@@ -4,6 +4,7 @@ import ErrorBoundary from './pages/Error';
 import LoginPage from './pages/Login';
 import SignupPage from './pages/Signup';
 import ResetPasswordPage from './pages/ResetPassword';
+import ChangePasswordPage from './pages/ChangePassword';
 import CommentSectionPage from './pages/CommentSection';
 
 export const router = createBrowserRouter([
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
       {
         path: '/reset',
         element: <ResetPasswordPage />,
+      },
+      {
+        path: '/changepassword',
+        element: <ChangePasswordPage />,
       },
     ],
   },
