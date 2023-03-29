@@ -2,7 +2,7 @@ import './button.scss';
 
 interface ButtonProps {
   children: string;
-  onClick: (e: React.MouseEvent<HTMLElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   type?: 'submit' | 'reset' | 'button' | undefined;
   variant?: 'primary' | 'secondary';
 }
