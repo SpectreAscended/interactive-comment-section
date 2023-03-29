@@ -48,13 +48,15 @@ const ChangePasswordForm: React.FC = () => {
     setSuccessMessage(null);
     setError(null);
 
+    const email = user?.email;
+    if (!email) {
+      return;
+    }
+
     if (newPasswordValue !== confirmPasswordValue) {
       setError('New passwords do not match.');
       return;
     }
-
-    const email = user?.email;
-    if (!email) return;
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -74,7 +76,7 @@ const ChangePasswordForm: React.FC = () => {
     } catch (err) {
       if (err instanceof Error) {
         const errorWithCode = err as { code?: string };
-        console.log(errorWithCode.code);
+        console.error(errorWithCode.code);
         if (errorWithCode.code === 'auth/wrong-password') {
           setError('Incorrect Password.');
         } else if (errorWithCode.code === 'auth/weak-password') {
@@ -91,7 +93,7 @@ const ChangePasswordForm: React.FC = () => {
   const inputClassesHandler = (inputHasError: boolean) => {
     return `auth-form__input ${inputHasError ? 'auth-form__input--error' : ''}`;
   };
-  console.log(newPasswordHasError);
+
   const newPasswordClasses = inputClassesHandler(newPasswordHasError);
   const confirmPasswordClasses = inputClassesHandler(confirmPasswordHasError);
 
@@ -153,7 +155,13 @@ const ChangePasswordForm: React.FC = () => {
             Password must be atleast 6 characters.
           </p>
         )}
-
+        <Link
+          to="/reset"
+          className="auth-form__link auth-form__link--forgot-password"
+          style={{ marginTop: '1rem' }}
+        >
+          Forgot password?
+        </Link>
         <div className="auth-form__actions">
           <Link to=".." className="auth-form__btn">
             Cancel
