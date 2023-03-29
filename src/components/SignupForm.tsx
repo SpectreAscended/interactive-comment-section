@@ -1,13 +1,18 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from './UI/Button';
 import useValidation, {
   nameValidation,
   emailValidation,
   passwordValidation,
 } from '../hooks/useValidation';
+import { auth } from '../firebase';
+import { createUserWithEmailAndPassword, updateProfile } from '@firebase/auth';
 import './authForm.scss';
 
 const SignupForm: React.FC = () => {
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
   const {
     inputValue: nameInputValue,
     inputValueHandler: nameValueHandler,
@@ -23,14 +28,14 @@ const SignupForm: React.FC = () => {
   } = useValidation(emailValidation);
 
   const {
-    inputValue: passwordValue,
+    inputValue: passwordInputValue,
     inputValueHandler: passwordValueHandler,
     inputBlurHandler: passwordBlurHandler,
     hasError: passwordHasError,
   } = useValidation(passwordValidation);
 
   const {
-    inputValue: confirmPasswordValue,
+    inputValue: confirmPasswordInputValue,
     inputValueHandler: confirmPasswordValueHandler,
     inputBlurHandler: confirmPasswordBlurHandler,
     hasError: confirmPasswordHasError,
@@ -44,10 +49,42 @@ const SignupForm: React.FC = () => {
   const passwordClasses = inputClassesHandler(passwordHasError);
   const confirmPasswordClasses = inputClassesHandler(confirmPasswordHasError);
 
+  const formSubmissionHandler = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const formIsValid =
+      !nameHasError &&
+      !emailHasError &&
+      !passwordHasError &&
+      !confirmPasswordHasError;
+
+    if (!formIsValid) return;
+
+    if (passwordInputValue !== confirmPasswordInputValue) {
+      setError('Passwords do not match');
+      return;
+    }
+    setError(null);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        emailInputValue,
+        passwordInputValue
+      );
+      const user = userCredential.user;
+      await updateProfile(user, { displayName: nameInputValue });
+
+      navigate('/');
+    } catch (err) {
+      setError('A user with that email is already signed up.');
+    }
+  };
+
   return (
     <section>
-      <form className="auth-form">
+      <form className="auth-form" onSubmit={formSubmissionHandler}>
         <h1 className="auth-form__heading">Sign up</h1>
+        <p className="auth-form__error-message">{error}</p>
         <label htmlFor="username" className="auth-form__label">
           Create Username
         </label>
@@ -90,7 +127,7 @@ const SignupForm: React.FC = () => {
           name="password"
           id="password"
           className={passwordClasses}
-          value={passwordValue}
+          value={passwordInputValue}
           onChange={passwordValueHandler}
           onBlur={passwordBlurHandler}
         />
@@ -109,7 +146,7 @@ const SignupForm: React.FC = () => {
           name="password-confirm"
           id="password-confirm"
           className={confirmPasswordClasses}
-          value={confirmPasswordValue}
+          value={confirmPasswordInputValue}
           onChange={confirmPasswordValueHandler}
           onBlur={confirmPasswordBlurHandler}
         />
@@ -127,9 +164,7 @@ const SignupForm: React.FC = () => {
             </Link>
           </p>
 
-          <Button type="submit" onClick={() => {}}>
-            Log in
-          </Button>
+          <Button type="submit">Sign up</Button>
         </div>
       </form>
     </section>
