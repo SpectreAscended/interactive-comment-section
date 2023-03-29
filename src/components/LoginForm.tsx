@@ -36,7 +36,6 @@ const LoginForm: React.FC = () => {
         passwordInputValue
       );
       const user = userCredential.user;
-      console.log(user);
       navigate('/');
     } catch (err) {
       if (err instanceof Error) {

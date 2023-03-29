@@ -57,7 +57,6 @@ const SignupForm: React.FC = () => {
 
     const formIsValid = nameIsValid && emailIsValid && passwordIsValid;
 
-    console.log(formIsValid);
     if (!formIsValid) return;
     if (passwordInputValue !== confirmPasswordInputValue) {
       setError('Passwords do not match');
@@ -75,7 +74,18 @@ const SignupForm: React.FC = () => {
 
       navigate('/');
     } catch (err) {
-      setError('A user with that email is already signed up.');
+      if (err instanceof Error) {
+        const errorWithCode = err as { code?: string };
+        if (errorWithCode.code === 'auth/email-already-in-use') {
+          setError('An account with that email already exists.');
+        } else if (errorWithCode.code === 'auth/weak-password') {
+          setError(
+            'Weak password.  Please enter a password with more than 6 characters.'
+          );
+        } else {
+          setError('An error occured. Please try again.');
+        }
+      }
     }
   };
 
