@@ -5,7 +5,9 @@ import useValidation, {
   emailValidation,
   passwordValidation,
 } from '../hooks/useValidation';
+import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import './authForm.scss';
+import { auth } from '../firebase';
 
 const LoginForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
@@ -25,6 +27,7 @@ const LoginForm: React.FC = () => {
     isValid: passwordIsValid,
   } = useValidation(passwordValidation);
   // BUG Do you really need validation for the login form? Probably not.
+
   const loginHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -32,6 +35,12 @@ const LoginForm: React.FC = () => {
     if (!formIsValid) return;
 
     try {
+      const currentUser = await signInWithEmailAndPassword(
+        auth,
+        emailInputValue,
+        passwordInputValue
+      );
+      console.log(currentUser);
     } catch (err) {}
   };
 
