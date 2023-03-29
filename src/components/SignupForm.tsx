@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from './UI/Button';
 import useValidation, {
-  nameValidation,
+  emptyFieldValidation,
   emailValidation,
   passwordValidation,
 } from '../hooks/useValidation';
@@ -19,7 +19,7 @@ const SignupForm: React.FC = () => {
     inputBlurHandler: nameBlurHandler,
     hasError: nameHasError,
     isValid: nameIsValid,
-  } = useValidation(nameValidation);
+  } = useValidation(emptyFieldValidation);
 
   const {
     inputValue: emailInputValue,

@@ -28,7 +28,7 @@ const useValidation = (validation: (a: string) => boolean) => {
 
 export default useValidation;
 
-export const nameValidation = (input: string) => {
+export const emptyFieldValidation = (input: string) => {
   return input.trim().length > 0;
 };
 
