@@ -18,6 +18,7 @@ const SignupForm: React.FC = () => {
     inputValueHandler: nameValueHandler,
     inputBlurHandler: nameBlurHandler,
     hasError: nameHasError,
+    isValid: nameIsValid,
   } = useValidation(nameValidation);
 
   const {
@@ -25,6 +26,7 @@ const SignupForm: React.FC = () => {
     inputValueHandler: emailValueHandler,
     inputBlurHandler: emailBlurHandler,
     hasError: emailHasError,
+    isValid: emailIsValid,
   } = useValidation(emailValidation);
 
   const {
@@ -32,6 +34,7 @@ const SignupForm: React.FC = () => {
     inputValueHandler: passwordValueHandler,
     inputBlurHandler: passwordBlurHandler,
     hasError: passwordHasError,
+    isValid: passwordIsValid,
   } = useValidation(passwordValidation);
 
   const {
@@ -52,14 +55,10 @@ const SignupForm: React.FC = () => {
   const formSubmissionHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formIsValid =
-      !nameHasError &&
-      !emailHasError &&
-      !passwordHasError &&
-      !confirmPasswordHasError;
+    const formIsValid = nameIsValid && emailIsValid && passwordIsValid;
 
+    console.log(formIsValid);
     if (!formIsValid) return;
-
     if (passwordInputValue !== confirmPasswordInputValue) {
       setError('Passwords do not match');
       return;

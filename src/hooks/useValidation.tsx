@@ -4,9 +4,9 @@ const useValidation = (validation: (a: string) => boolean) => {
   const [inputValue, setInputValue] = useState('');
   const [interacted, setInteracted] = useState(false);
 
-  const inputIsValid = validation(inputValue);
+  const isValid = validation(inputValue);
 
-  const hasError = interacted && !inputIsValid;
+  const hasError = interacted && !isValid;
 
   const inputValueHandler = (e: React.FormEvent<HTMLInputElement>) => {
     setInteracted(false);
@@ -22,6 +22,7 @@ const useValidation = (validation: (a: string) => boolean) => {
     inputValueHandler,
     inputBlurHandler,
     hasError,
+    isValid,
   };
 };
 
