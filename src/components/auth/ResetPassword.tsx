@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate, useNavigation } from 'react-router-dom';
-import useValidation, { emailValidation } from '../hooks/useValidation';
-import Button from './UI/Button';
-import { auth } from '../firebase';
+import useValidation, { emailValidation } from '../../hooks/useValidation';
+import Button from '../UI/Button';
+import { auth } from '../../firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
-import { REDIRECT_TIMER } from '../appConfig';
+import { REDIRECT_TIMER } from '../../appConfig';
 import './authForm.scss';
 
 const ResetPasswordForm: React.FC = () => {

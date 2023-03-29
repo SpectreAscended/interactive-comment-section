@@ -1,8 +1,8 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Button from './UI/Button';
-import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../firebase';
+import Button from '../UI/Button';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase';
 import './authForm.scss';
 
 const LoginForm: React.FC = () => {

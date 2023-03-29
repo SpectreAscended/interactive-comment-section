@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Button from './UI/Button';
+import Button from '../UI/Button';
 import useValidation, {
   emptyFieldValidation,
   emailValidation,
   passwordValidation,
-} from '../hooks/useValidation';
-import { auth } from '../firebase';
+} from '../../hooks/useValidation';
+import { auth } from '../../firebase';
 import { createUserWithEmailAndPassword, updateProfile } from '@firebase/auth';
 import './authForm.scss';
 

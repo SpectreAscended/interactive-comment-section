@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import { signInWithEmailAndPassword, updatePassword } from 'firebase/auth';
-import Button from './UI/Button';
-import useSimpleInput from '../hooks/useSimpleInput';
-import useValidation, { passwordValidation } from '../hooks/useValidation';
+import Button from '../UI/Button';
+import useSimpleInput from '../../hooks/useSimpleInput';
+import useValidation, { passwordValidation } from '../../hooks/useValidation';
 import { Link, useNavigate } from 'react-router-dom';
-import { REDIRECT_TIMER } from '../appConfig';
+import { REDIRECT_TIMER } from '../../appConfig';
 import './authForm.scss';
 
-const ChangePassword: React.FC = () => {
+const ChangePasswordForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -165,4 +165,4 @@ const ChangePassword: React.FC = () => {
   );
 };
 
-export default ChangePassword;
+export default ChangePasswordForm;
