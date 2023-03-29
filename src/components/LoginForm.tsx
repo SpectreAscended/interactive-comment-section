@@ -1,59 +1,68 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from './UI/Button';
-import useValidation, {
-  emailValidation,
-  passwordValidation,
-} from '../hooks/useValidation';
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import './authForm.scss';
 import { auth } from '../firebase';
 
 const LoginForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
-  const {
-    inputValue: emailInputValue,
-    inputValueHandler: emailInputHandler,
-    inputBlurHandler: emailBlurHandler,
-    hasError: emailHasError,
-    isValid: emailIsValid,
-  } = useValidation(emailValidation);
+  const [emailInputValue, setEmailInputValue] = useState('');
+  const [passwordInputValue, setPasswordInputValue] = useState('');
+  const navigate = useNavigate();
 
-  const {
-    inputValue: passwordInputValue,
-    inputValueHandler: passwordInputHandler,
-    inputBlurHandler: passwordBlurHandler,
-    hasError: passwordHasError,
-    isValid: passwordIsValid,
-  } = useValidation(passwordValidation);
-  // BUG Do you really need validation for the login form? Probably not.
+  const emailInputHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    setEmailInputValue(e.currentTarget.value);
+  };
+
+  const passwordInputHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    setPasswordInputValue(e.currentTarget.value);
+  };
 
   const loginHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formIsValid = emailIsValid && passwordIsValid;
-    if (!formIsValid) return;
+    if (
+      emailInputValue.trim().length === 0 ||
+      passwordInputValue.trim().length === 0
+    ) {
+      return;
+    }
 
     try {
-      const currentUser = await signInWithEmailAndPassword(
+      const userCredential = await signInWithEmailAndPassword(
         auth,
         emailInputValue,
         passwordInputValue
       );
-      console.log(currentUser);
-    } catch (err) {}
+      const user = userCredential.user;
+      console.log(user);
+      navigate('/');
+    } catch (err) {
+      if (err instanceof Error) {
+        const errorWithCode = err as { code?: string };
+        if (errorWithCode.code === 'auth/wrong-password') {
+          setError('Incorrect Password.');
+        } else if (errorWithCode.code === 'auth/user-not-found') {
+          setError(
+            'No account with that email exists.  Please create an account.'
+          );
+        } else if (errorWithCode.code === 'auth/too-many-requests') {
+          setError(
+            'Too many failed requests.  Please try again in a few minutes.'
+          );
+        } else {
+          setError('Unknown error. Please try again.');
+        }
+      }
+    }
   };
-
-  const inputClassesHandler = (inputHasError: boolean) => {
-    return `auth-form__input ${inputHasError ? 'auth-form__input--error' : ''}`;
-  };
-  const emailClasses = inputClassesHandler(emailHasError);
-  const passwordClasses = inputClassesHandler(passwordHasError);
 
   return (
     <section>
       <form className="auth-form" onSubmit={loginHandler}>
         <h1 className="auth-form__heading">Log in</h1>
+        <p className="auth-form__error-message">{error}</p>
         <label htmlFor="email" className="auth-form__label">
           Email
         </label>
@@ -61,17 +70,11 @@ const LoginForm: React.FC = () => {
           type="email"
           name="email"
           id="email"
-          className={emailClasses}
+          className="auth-form__input"
           autoComplete="email"
           value={emailInputValue}
           onChange={emailInputHandler}
-          onBlur={emailBlurHandler}
         />
-        {emailHasError && (
-          <p className="auth-form__error-message">
-            Please enter a valid email.
-          </p>
-        )}
 
         <label htmlFor="password" className="auth-form__label">
           Password
@@ -81,16 +84,10 @@ const LoginForm: React.FC = () => {
           autoComplete="current-password"
           name="password"
           id="password"
-          className={passwordClasses}
+          className="auth-form__input"
           value={passwordInputValue}
           onChange={passwordInputHandler}
-          onBlur={passwordBlurHandler}
         />
-        {passwordHasError && (
-          <p className="auth-form__error-message">
-            Password must be atleast 6 characters long.
-          </p>
-        )}
 
         <div className="auth-form__actions">
           <p>
