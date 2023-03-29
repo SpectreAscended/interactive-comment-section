@@ -32,6 +32,7 @@ const ResetPasswordForm: React.FC = () => {
     e.preventDefault();
     setError(null);
     if (!emailIsValid) {
+      setError('Please enter a valid email.');
       return;
     }
     try {
