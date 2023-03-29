@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from './UI/Button';
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import './authForm.scss';
 import { auth } from '../firebase';
+import './authForm.scss';
 
 const LoginForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
@@ -37,6 +37,7 @@ const LoginForm: React.FC = () => {
         passwordInputValue
       );
       const user = userCredential.user;
+
       navigate('/');
     } catch (err) {
       if (err instanceof Error) {
