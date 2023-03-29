@@ -62,7 +62,7 @@ const LoginForm: React.FC = () => {
     <section>
       <form className="auth-form" onSubmit={loginHandler}>
         <h1 className="auth-form__heading">Log in</h1>
-        <p className="auth-form__error-message">{error}</p>
+        {error && <p className="auth-form__error-message">{error}</p>}
         <label htmlFor="email" className="auth-form__label">
           Email
         </label>
@@ -88,18 +88,21 @@ const LoginForm: React.FC = () => {
           value={passwordInputValue}
           onChange={passwordInputHandler}
         />
-
         <div className="auth-form__actions">
           <p>
             Need an account?{' '}
             <Link to="/signup" className="auth-form__link">
               Sign up!
+            </Link>{' '}
+            <Link
+              to="/reset"
+              className="auth-form__link auth-form__link--forgot-password"
+            >
+              Forgot pasword?
             </Link>
           </p>
 
-          <Button type="submit" onClick={() => {}}>
-            Log in
-          </Button>
+          <Button type="submit">Log in</Button>
         </div>
       </form>
     </section>

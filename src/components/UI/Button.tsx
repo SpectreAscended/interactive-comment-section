@@ -5,6 +5,7 @@ interface ButtonProps {
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   type?: 'submit' | 'reset' | 'button' | undefined;
   variant?: 'primary' | 'secondary';
+  disabled?: boolean | undefined;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -12,6 +13,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   type = 'button',
   variant = 'primary',
+  disabled = undefined,
 }) => {
   let buttonClasses = 'button button--primary';
 
@@ -20,7 +22,12 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   return (
-    <button className={buttonClasses} onClick={onClick} type={type}>
+    <button
+      className={buttonClasses}
+      onClick={onClick}
+      type={type}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

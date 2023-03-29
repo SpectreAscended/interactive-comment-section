@@ -3,6 +3,7 @@ import RootLayout from './pages/Layout';
 import ErrorBoundary from './pages/Error';
 import LoginPage from './pages/Login';
 import SignupPage from './pages/Signup';
+import ResetPasswordPage from './pages/ResetPassword';
 import CommentSectionPage from './pages/CommentSection';
 
 export const router = createBrowserRouter([
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
       {
         path: '/signup',
         element: <SignupPage />,
+      },
+      {
+        path: '/reset',
+        element: <ResetPasswordPage />,
       },
     ],
   },

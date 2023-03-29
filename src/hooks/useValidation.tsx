@@ -17,12 +17,18 @@ const useValidation = (validation: (a: string) => boolean) => {
     setInteracted(true);
   };
 
+  const resetInput = () => {
+    setInteracted(false);
+    setInputValue('');
+  };
+
   return {
     inputValue,
     inputValueHandler,
     inputBlurHandler,
     hasError,
     isValid,
+    resetInput,
   };
 };
 

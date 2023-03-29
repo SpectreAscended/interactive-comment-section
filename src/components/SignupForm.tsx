@@ -93,7 +93,7 @@ const SignupForm: React.FC = () => {
     <section>
       <form className="auth-form" onSubmit={formSubmissionHandler}>
         <h1 className="auth-form__heading">Sign up</h1>
-        <p className="auth-form__error-message">{error}</p>
+        {error && <p className="auth-form__error-message">{error}</p>}
         <label htmlFor="username" className="auth-form__label">
           Create Username
         </label>

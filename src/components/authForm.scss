@@ -27,6 +27,14 @@
     color: rgb(209, 47, 47);
   }
 
+  &__success-message {
+    background-color: var(--color-moderate-blue);
+    padding: 1rem 0.5rem;
+    border-radius: 0.5rem;
+    color: var(--color-white);
+    text-align: center;
+  }
+
   &__actions {
     display: flex;
     justify-content: center;
@@ -41,6 +49,12 @@
 
     &:hover {
       color: var(--color-moderate-blue);
+    }
+
+    &--forgot-password {
+      display: block;
+      text-align: center;
+      margin-top: 0.5rem;
     }
   }
 }
