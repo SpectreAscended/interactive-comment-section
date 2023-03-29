@@ -26,6 +26,7 @@ const LoginForm: React.FC = () => {
       emailInputValue.trim().length === 0 ||
       passwordInputValue.trim().length === 0
     ) {
+      setError('Fields cannot be blank.');
       return;
     }
 
