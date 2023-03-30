@@ -122,6 +122,7 @@ const Account: React.FC = () => {
             <span>Delete profile image</span>
             <button
               className="account__settings-link"
+              disabled={img == null}
               onClick={deleteImageHandler}
             >
               Delete image
