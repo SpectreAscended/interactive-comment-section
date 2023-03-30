@@ -45,7 +45,11 @@ const Account: React.FC = () => {
       <h2>{userData.userName}</h2>
       <Link to="changepassword">Change Password</Link>
       <form onSubmit={uploadImage}>
-        <input type="file" onChange={imageUploadHandler} />
+        <input
+          type="file"
+          accept="image/gif, image/jpeg, image/webp, image/bmp"
+          onChange={imageUploadHandler}
+        />
         <button>Upload image</button>
       </form>
 
