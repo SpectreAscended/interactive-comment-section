@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useReducer } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 interface AuthContextProviderProps {
