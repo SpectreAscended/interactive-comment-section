@@ -5,3 +5,7 @@
 @mixin bp-desktop {
   min-width: 1440px;
 }
+
+@mixin ui-lighten-primary {
+  background-color: lighten(hsl(238, 40%, 52%), 20%);
+}
