@@ -1,13 +1,15 @@
 import { authContext } from '../../context/AuthContext';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { storage } from '../../firebase';
-import { ref, uploadBytes } from 'firebase/storage';
+import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
 
 const Account: React.FC = () => {
   const { userData } = useContext(authContext);
   const [imageUpload, setImageUpload] = useState<any>(null);
+  const [imageList, setImageList] = useState<string[]>([]);
 
+  const imagesListRef = ref(storage, 'images/');
   const uploadImage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (imageUpload == null) return;
@@ -25,6 +27,16 @@ const Account: React.FC = () => {
       setImageUpload(e.currentTarget.files[0]);
     }
   };
+  console.log(imageList);
+  useEffect(() => {
+    listAll(imagesListRef).then(res => {
+      res.items.forEach(item => {
+        getDownloadURL(item).then(url => {
+          setImageList(prevList => [...prevList, url]);
+        });
+      });
+    });
+  }, []);
 
   return (
     <section className="account">
@@ -34,6 +46,7 @@ const Account: React.FC = () => {
       <form onSubmit={uploadImage}>
         <input type="file" onChange={imageUploadHandler} />
         <button>Upload image</button>
+        <img src={imageList[0]} alt="user" />
       </form>
     </section>
   );
