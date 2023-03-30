@@ -17,11 +17,7 @@ const CommentInput: React.FC = () => {
   return (
     <form className="comment-input">
       <figure className="comment-input__user-img">
-        {userData ? (
-          <img src={userImg} alt="user img" />
-        ) : (
-          <img src="null"></img>
-        )}
+        {userImg ? <img src={userImg} alt="user img" /> : ''}
       </figure>
       <div className="comment-input__content">
         <textarea
