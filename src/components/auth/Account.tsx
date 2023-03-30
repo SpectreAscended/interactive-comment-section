@@ -52,7 +52,7 @@ const Account: React.FC = () => {
       `users/${uid}/userImage/${crypto.randomUUID() + imageUpload.name}`
     );
     try {
-      if (img) {
+      if (img != null) {
         deleteImage();
       }
 
