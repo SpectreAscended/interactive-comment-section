@@ -18,8 +18,9 @@ const Account: React.FC = () => {
       `images/${crypto.randomUUID() + imageUpload.name}`
     );
     try {
-      await uploadBytes(imageRef, imageUpload);
-      alert('image uploaded');
+      const snapshop = await uploadBytes(imageRef, imageUpload);
+      const url = await getDownloadURL(snapshop.ref);
+      setImageList(prev => [...prev, url]);
     } catch (err) {}
   };
   const imageUploadHandler = (e: React.FormEvent<HTMLInputElement>) => {
@@ -46,8 +47,11 @@ const Account: React.FC = () => {
       <form onSubmit={uploadImage}>
         <input type="file" onChange={imageUploadHandler} />
         <button>Upload image</button>
-        <img src={imageList[0]} alt="user" />
       </form>
+
+      {imageList.map(image => {
+        return <img src={image} alt="" />;
+      })}
     </section>
   );
 };
