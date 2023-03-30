@@ -66,6 +66,7 @@ const ResetPasswordForm: React.FC = () => {
         {successMessage && (
           <p className="auth-form__success-message">{successMessage}</p>
         )}
+        <input hidden type="email" autoComplete="username" />
         <label htmlFor="email" className="auth-form__label">
           Email
         </label>

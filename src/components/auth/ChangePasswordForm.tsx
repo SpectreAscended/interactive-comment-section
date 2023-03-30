@@ -105,6 +105,7 @@ const ChangePasswordForm: React.FC = () => {
         {successMessage && (
           <p className="auth-form__success-message">{successMessage}</p>
         )}
+        <input hidden type="email" autoComplete="username" />
         <label htmlFor="password" className="auth-form__label">
           Current password
         </label>
