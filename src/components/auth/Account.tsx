@@ -122,7 +122,7 @@ const Account: React.FC = () => {
             </form>
           </li>
           <li className="account__settings-list--item">
-            <span>Delete profile image</span>
+            <span>Delete Profile Image</span>
             <button
               className="account__settings-link"
               disabled={img == null}
@@ -132,7 +132,7 @@ const Account: React.FC = () => {
             </button>
           </li>
           <li className="account__settings-list--item">
-            <span>Profile description</span>
+            <span>Profile Description</span>
             <Link to="description" className="account__settings-link">
               Edit
             </Link>
