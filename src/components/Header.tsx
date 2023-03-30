@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Button from './UI/Button';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
@@ -8,6 +8,7 @@ import './header.scss';
 
 const Header: React.FC = () => {
   const { isAuthenticated, authHandler } = useContext(authContext);
+  const navigate = useNavigate();
 
   return (
     <header className="header">
@@ -30,7 +31,7 @@ const Header: React.FC = () => {
               <Button
                 onClick={() => {
                   signOut(auth);
-                  authHandler(false);
+                  navigate('/');
                 }}
               >
                 Log out
