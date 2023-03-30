@@ -37,7 +37,14 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <Backdrop>
-      <motion.div className="modal" onClick={e => e.stopPropagation()}>
+      <motion.div
+        className="modal"
+        variants={dropIn}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        onClick={e => e.stopPropagation()}
+      >
         <h2 className="modal__heading">{title}</h2>
         <p className="modal__message">{message}</p>
         <div className="modal__actions">

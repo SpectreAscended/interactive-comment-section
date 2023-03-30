@@ -14,6 +14,7 @@ import Modal from '../UI/Modal';
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 import { uiActions } from '../../store/uiSlice';
 import { useAppSelector } from '../../hooks/stateHooks';
+import { AnimatePresence } from 'framer-motion';
 import './account.scss';
 
 const Account: React.FC = () => {
@@ -73,16 +74,18 @@ const Account: React.FC = () => {
 
   return (
     <section className="account">
-      {modalOpen && (
-        <Modal
-          title="Delete Image"
-          message="Are you sure?"
-          onSecondary={() => {
-            dispatch(uiActions.closeModal());
-          }}
-          onPrimary={proceedPromptHandler}
-        />
-      )}
+      <AnimatePresence initial={false} mode="sync">
+        {modalOpen && (
+          <Modal
+            title="Delete Image"
+            message="Are you sure?"
+            onSecondary={() => {
+              dispatch(uiActions.closeModal());
+            }}
+            onPrimary={proceedPromptHandler}
+          />
+        )}
+      </AnimatePresence>
       <h1 className="account__heading">Edit Account</h1>
       <figure className="account__settings--userImg">
         {img ? <img src={img} alt="" className="image" /> : ''}
