@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate, useNavigation, Link } from 'react-router-dom';
 import useValidation, { emailValidation } from '../../hooks/useValidation';
 import Button from '../UI/Button';
 import { auth } from '../../firebase';
@@ -85,6 +85,9 @@ const ResetPasswordForm: React.FC = () => {
           </p>
         )}
         <div className="auth-form__actions">
+          <Link to=".." className="auth-form__btn">
+            Cancel
+          </Link>
           <Button type="submit" disabled={submitting}>
             {submitting ? 'Submitting...' : 'Reset Password'}
           </Button>
