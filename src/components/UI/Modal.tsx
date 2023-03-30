@@ -23,13 +23,23 @@ const Modal: React.FC<ModalProps> = ({
   };
   return (
     <Backdrop onClose={closeModalHandler}>
-      <div className="modal">
+      <div className="modal" onClick={e => e.stopPropagation()}>
         <h1 className="modal__heading">{title}</h1>
         <p className="modal__message">{message}</p>
         <div className="modal__actions">
-          <button className="modal__btn modal__btn--secondary">Cancel</button>
+          <button
+            className="modal__btn modal__btn--secondary"
+            onClick={onSecondary}
+          >
+            Cancel
+          </button>
 
-          <button className="modal__btn modal__btn--primary">Ok</button>
+          <button
+            className="modal__btn modal__btn--primary"
+            onClick={onPrimary}
+          >
+            Ok
+          </button>
         </div>
       </div>
     </Backdrop>

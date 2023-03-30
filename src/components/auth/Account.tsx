@@ -2,6 +2,7 @@ import { authContext } from '../../context/AuthContext';
 import { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { storage, auth } from '../../firebase';
+import { updateProfile } from 'firebase/auth';
 import {
   ref,
   uploadBytes,
@@ -9,14 +10,20 @@ import {
   getDownloadURL,
   deleteObject,
 } from 'firebase/storage';
+import Modal from '../UI/Modal';
+import { useDispatch } from 'react-redux/es/hooks/useDispatch';
+import { uiActions } from '../../store/uiSlice';
+import { useAppSelector } from '../../hooks/stateHooks';
 import './account.scss';
-import { updateProfile } from 'firebase/auth';
 
 const Account: React.FC = () => {
   const { userData, updateUserImage } = useContext(authContext);
   const [imageUpload, setImageUpload] = useState<any>(null);
   const [img, setImg] = useState<string | null>(null);
   const uid = userData.uid;
+
+  const dispatch = useDispatch();
+  const modalOpen = useAppSelector(state => state.ui.modalOpen);
 
   const imagesListRef = ref(storage, `users/${uid}/userImage/`);
   const uploadImage = async (e: React.FormEvent) => {
@@ -50,17 +57,32 @@ const Account: React.FC = () => {
     }
   }, []);
 
-  const deleteImageHandler = async () => {
+  const proceedPromptHandler = async () => {
     const res = await list(imagesListRef);
     const item = res.items[0].fullPath;
     const itemRef = ref(storage, item);
     deleteObject(itemRef);
     updateUserImage('');
     setImg(null);
+    dispatch(uiActions.closeModal());
+  };
+
+  const deleteImageHandler = async () => {
+    dispatch(uiActions.openModal());
   };
 
   return (
     <section className="account">
+      {modalOpen && (
+        <Modal
+          title="Delete Image"
+          message="Are you sure?"
+          onSecondary={() => {
+            dispatch(uiActions.closeModal());
+          }}
+          onPrimary={proceedPromptHandler}
+        />
+      )}
       <h1 className="account__heading">Edit Account</h1>
       <figure className="account__settings--userImg">
         {img ? <img src={img} alt="" className="image" /> : ''}
