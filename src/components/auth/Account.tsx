@@ -26,15 +26,36 @@ const Account: React.FC = () => {
   const dispatch = useDispatch();
   const modalOpen = useAppSelector(state => state.ui.modalOpen);
 
+  useEffect(() => {
+    if (auth.currentUser) {
+      setImg(auth.currentUser?.photoURL);
+    }
+  }, [auth.currentUser]);
+
+  const deleteImage = async () => {
+    console.log('running');
+    const res = await list(imagesListRef);
+    const item = res.items[0].fullPath;
+    const itemRef = ref(storage, item);
+    deleteObject(itemRef);
+    updateUserImage('');
+    setImg(null);
+  };
+
   const imagesListRef = ref(storage, `users/${uid}/userImage/`);
   const uploadImage = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (imageUpload == null) return;
     const imageRef = ref(
       storage,
       `users/${uid}/userImage/${crypto.randomUUID() + imageUpload.name}`
     );
     try {
+      if (img) {
+        deleteImage();
+      }
+
       const snapshot = await uploadBytes(imageRef, imageUpload);
       const url = await getDownloadURL(snapshot.ref);
       setImg(url);
@@ -44,6 +65,7 @@ const Account: React.FC = () => {
         await updateProfile(user, { photoURL: url });
         updateUserImage(url);
       }
+      setImageUpload(null);
     } catch (err) {}
   };
   const imageUploadHandler = (e: React.FormEvent<HTMLInputElement>) => {
@@ -52,19 +74,8 @@ const Account: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (auth.currentUser) {
-      setImg(auth.currentUser?.photoURL);
-    }
-  }, [auth.currentUser]);
-
   const proceedPromptHandler = async () => {
-    const res = await list(imagesListRef);
-    const item = res.items[0].fullPath;
-    const itemRef = ref(storage, item);
-    deleteObject(itemRef);
-    updateUserImage('');
-    setImg(null);
+    deleteImage();
     dispatch(uiActions.closeModal());
   };
 
@@ -110,7 +121,7 @@ const Account: React.FC = () => {
                   onChange={imageUploadHandler}
                   style={{ display: 'none' }}
                 />
-                Choose image
+                {img ? 'Change' : 'Choose'} image
               </label>
 
               <button
