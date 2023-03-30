@@ -25,6 +25,7 @@ const ChangePasswordForm: React.FC = () => {
     inputBlurHandler: newPasswordBlurHandler,
     resetInput: resetNewPassword,
     hasError: newPasswordHasError,
+    isValid: newPasswordIsValid,
   } = useValidation(passwordValidation);
 
   const {
@@ -64,6 +65,10 @@ const ChangePasswordForm: React.FC = () => {
         currentPasswordValue
       );
       if (!userCredential) return;
+      if (!newPasswordIsValid) {
+        setError('Please enter a password with 6 or more characters');
+        return;
+      }
 
       await updatePassword(userCredential.user, newPasswordValue);
 
@@ -80,9 +85,7 @@ const ChangePasswordForm: React.FC = () => {
         if (errorWithCode.code === 'auth/wrong-password') {
           setError('Incorrect Password.');
         } else if (errorWithCode.code === 'auth/weak-password') {
-          setError(
-            'Weak password.  Please enter a password with more than 6 characters.'
-          );
+          setError('Please enter a password with atleast 6 characters.');
         } else {
           setError('An error occured.');
         }
