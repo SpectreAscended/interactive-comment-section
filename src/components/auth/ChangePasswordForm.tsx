@@ -42,15 +42,14 @@ const ChangePasswordForm: React.FC = () => {
     resetConfirmPassword();
   };
 
-  const user = auth.currentUser;
-
   const changePasswordHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     setSuccessMessage(null);
     setError(null);
 
-    const email = user?.email;
-    if (!email) {
+    const user = auth.currentUser;
+    if (!user) {
+      navigate('/login');
       return;
     }
 
@@ -58,10 +57,11 @@ const ChangePasswordForm: React.FC = () => {
       setError('New passwords do not match.');
       return;
     }
+
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
-        email,
+        user.email!,
         currentPasswordValue
       );
       if (!userCredential) return;
