@@ -5,14 +5,14 @@ import Button from './UI/Button';
 import './commentInput.scss';
 
 const CommentInput: React.FC = () => {
-  const [userImg, setUserImg] = useState<any>(null);
   const { userData } = useContext(authContext);
+  const [userImg, setUserImg] = useState<any>(userData.userImage);
 
   useEffect(() => {
-    if (userData) {
+    if (userData.userImage) {
       setUserImg(userData.userImage);
     }
-  }, [userData]);
+  }, [userData.userImage]);
 
   return (
     <form className="comment-input">

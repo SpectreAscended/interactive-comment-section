@@ -21,12 +21,14 @@ interface AuthContext {
   };
   isAuthenticated: boolean;
   authHandler: (a: boolean) => void;
+  updateUserImage: (a: string) => void;
 }
 
 export const authContext = createContext<AuthContext>({
   isAuthenticated: false,
   authHandler: () => {},
   userData: {},
+  updateUserImage: () => {},
 });
 
 export const AuthProvider: React.FC<AuthContextProviderProps> = ({
@@ -56,6 +58,12 @@ export const AuthProvider: React.FC<AuthContextProviderProps> = ({
     };
   }, []);
 
+  const updateUserImage = (img: string) => {
+    setUserData(prev => {
+      return { ...prev, userImage: img };
+    });
+  };
+
   const authHandler = (isAuth: boolean) => {
     if (isAuth != null) {
       setIsAuthenticated(true);
@@ -67,6 +75,7 @@ export const AuthProvider: React.FC<AuthContextProviderProps> = ({
   const value = {
     isAuthenticated,
     authHandler,
+    updateUserImage,
     userData,
   };
 

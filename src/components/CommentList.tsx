@@ -1,9 +1,12 @@
+import { useContext } from 'react';
+import { authContext } from '../context/AuthContext';
 import CommentCard from './CommentCard';
 import CommentInput from './CommentInput';
 import DUMMY_DATA from '../store/DUMMY_DATA';
 
 const CommentList: React.FC = () => {
   const data = DUMMY_DATA;
+  const { isAuthenticated } = useContext(authContext);
 
   return (
     <section className="comment-list">
@@ -15,7 +18,7 @@ const CommentList: React.FC = () => {
             </li>
           );
         })}
-        <CommentInput />
+        {isAuthenticated && <CommentInput />}
       </ul>
     </section>
   );

@@ -13,10 +13,9 @@ import './account.scss';
 import { updateProfile } from 'firebase/auth';
 
 const Account: React.FC = () => {
-  const { userData } = useContext(authContext);
+  const { userData, updateUserImage } = useContext(authContext);
   const [imageUpload, setImageUpload] = useState<any>(null);
   const [img, setImg] = useState<string | null>(null);
-  const [displayImg, setDisplayImg] = useState<string | null>(null);
   const uid = userData.uid;
 
   const imagesListRef = ref(storage, `users/${uid}/userImage/`);
@@ -34,8 +33,8 @@ const Account: React.FC = () => {
 
       const user = auth.currentUser;
       if (user) {
-        const foo = await updateProfile(user, { photoURL: url });
-        console.log('foo', foo);
+        await updateProfile(user, { photoURL: url });
+        updateUserImage(url);
       }
     } catch (err) {}
   };
@@ -56,6 +55,7 @@ const Account: React.FC = () => {
     const item = res.items[0].fullPath;
     const itemRef = ref(storage, item);
     deleteObject(itemRef);
+    updateUserImage('');
     setImg(null);
   };
 
