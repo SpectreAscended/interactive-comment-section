@@ -33,7 +33,6 @@ const Account: React.FC = () => {
   }, [auth.currentUser]);
 
   const deleteImage = async () => {
-    console.log('running');
     const res = await list(imagesListRef);
     const item = res.items[0].fullPath;
     const itemRef = ref(storage, item);
