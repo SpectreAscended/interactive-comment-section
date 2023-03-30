@@ -9,8 +9,16 @@
   padding: 2rem;
 
   &__user-img {
-    width: 3rem;
+    width: 4rem;
+    height: 4rem;
+    overflow: hidden;
+    border-radius: 50%;
     margin: 0;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
   }
 
   &__content {
