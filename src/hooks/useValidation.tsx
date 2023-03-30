@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useValidation = (validation: (a: string) => boolean) => {
+const useValidation = (validation: (validationFn: string) => boolean) => {
   const [inputValue, setInputValue] = useState('');
   const [interacted, setInteracted] = useState(false);
 
