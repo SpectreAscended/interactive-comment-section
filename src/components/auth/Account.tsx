@@ -55,7 +55,7 @@ const Account: React.FC = () => {
     if (auth.currentUser) {
       setImg(auth.currentUser?.photoURL);
     }
-  }, []);
+  }, [auth.currentUser]);
 
   const proceedPromptHandler = async () => {
     const res = await list(imagesListRef);
