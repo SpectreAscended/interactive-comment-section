@@ -3,6 +3,7 @@ import { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { storage } from '../../firebase';
 import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
+import './account.scss';
 
 const Account: React.FC = () => {
   const { userData } = useContext(authContext);
@@ -18,8 +19,8 @@ const Account: React.FC = () => {
       `images/${crypto.randomUUID() + imageUpload.name}`
     );
     try {
-      const snapshop = await uploadBytes(imageRef, imageUpload);
-      const url = await getDownloadURL(snapshop.ref);
+      const snapshot = await uploadBytes(imageRef, imageUpload);
+      const url = await getDownloadURL(snapshot.ref);
       setImageList(prev => [...prev, url]);
     } catch (err) {}
   };
@@ -43,19 +44,44 @@ const Account: React.FC = () => {
     <section className="account">
       <h1 className="account__heading">Edit Account</h1>
       <h2>{userData.userName}</h2>
-      <Link to="changepassword">Change Password</Link>
-      <form onSubmit={uploadImage}>
-        <input
-          type="file"
-          accept="image/gif, image/jpeg, image/webp, image/bmp"
-          onChange={imageUploadHandler}
-        />
-        <button>Upload image</button>
-      </form>
+      <div className="account__settings">
+        <ul className="account__settings-list">
+          <li className="account__settings-list--item">
+            <span>Password</span>
+            <Link to="changepassword" className="account__settings-link">
+              Change Password
+            </Link>
+          </li>
+          <li className="account__settings-list--item">
+            <span>Profile Image</span>
+            <form onSubmit={uploadImage} className="account__settings-form">
+              <label htmlFor="profile-image" className="account__settings-link">
+                <input
+                  type="file"
+                  id="profile-image"
+                  accept="image/gif, image/jpeg, image/webp, image/bmp"
+                  onChange={imageUploadHandler}
+                  style={{ display: 'none' }}
+                />
+                Choose image
+              </label>
 
-      {imageList.map(image => {
-        return <img src={image} alt="" />;
-      })}
+              <button
+                className="account__settings-link account__settings-link--primary"
+                disabled={!imageUpload}
+              >
+                Upload image
+              </button>
+            </form>
+          </li>
+          <li className="account__settings-list--item">
+            <span>Profile description</span>
+            <Link to="description" className="account__settings-link">
+              Edit
+            </Link>
+          </li>
+        </ul>
+      </div>
     </section>
   );
 };
