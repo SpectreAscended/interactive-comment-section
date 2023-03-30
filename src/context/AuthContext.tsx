@@ -9,6 +9,7 @@ interface UserData {
   userName: string;
   userImage?: string;
   email: string;
+  uid: string;
 }
 
 interface AuthContext {
@@ -16,6 +17,7 @@ interface AuthContext {
     userName?: string;
     userImage?: string;
     email?: string;
+    uid?: string;
   };
   isAuthenticated: boolean;
   authHandler: (a: boolean) => void;
@@ -41,6 +43,7 @@ export const AuthProvider: React.FC<AuthContextProviderProps> = ({
           userName: user.displayName,
           userImage: user.photoURL,
           email: user.email,
+          uid: user.uid,
         });
       } else {
         setIsAuthenticated(false);
