@@ -6,6 +6,7 @@ import SignupPage from './pages/Signup';
 import ResetPasswordPage from './pages/ResetPassword';
 import ChangePasswordPage from './pages/ChangePassword';
 import CommentSectionPage from './pages/CommentSection';
+import AccountPage from './pages/Account';
 
 export const router = createBrowserRouter([
   {
@@ -29,9 +30,19 @@ export const router = createBrowserRouter([
         path: '/reset',
         element: <ResetPasswordPage />,
       },
+
       {
-        path: '/changepassword',
-        element: <ChangePasswordPage />,
+        path: '/account',
+        children: [
+          {
+            index: true,
+            element: <AccountPage />,
+          },
+          {
+            path: 'changepassword',
+            element: <ChangePasswordPage />,
+          },
+        ],
       },
     ],
   },

@@ -18,6 +18,13 @@ const Header: React.FC = () => {
               <Button variant="secondary">Home</Button>
             </NavLink>
           </li>
+          {isAuthenticated && (
+            <li>
+              <NavLink to="account">
+                <Button variant="secondary">Account</Button>
+              </NavLink>
+            </li>
+          )}
           <li>
             {isAuthenticated ? (
               <Button
