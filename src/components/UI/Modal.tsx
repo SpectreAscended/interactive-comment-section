@@ -1,7 +1,6 @@
 import Backdrop from './Backdrop';
-import { useDispatch } from 'react-redux/es/exports';
+import { motion } from 'framer-motion';
 import './modal.scss';
-import { uiActions } from '../../store/uiSlice';
 
 interface ModalProps {
   title: string;
@@ -16,15 +15,30 @@ const Modal: React.FC<ModalProps> = ({
   onPrimary,
   onSecondary,
 }) => {
-  const dispatch = useDispatch();
-
-  const closeModalHandler = () => {
-    dispatch(uiActions.closeModal);
+  const dropIn = {
+    hidden: {
+      y: '-100vh',
+      opacity: 0,
+    },
+    visible: {
+      y: '0',
+      opacity: 1,
+      transition: {
+        duration: 0.75,
+        type: 'spring',
+        bounce: 0.25,
+      },
+    },
+    exit: {
+      y: '100vh',
+      opacity: 0,
+    },
   };
+
   return (
-    <Backdrop onClose={closeModalHandler}>
-      <div className="modal" onClick={e => e.stopPropagation()}>
-        <h1 className="modal__heading">{title}</h1>
+    <Backdrop>
+      <motion.div className="modal" onClick={e => e.stopPropagation()}>
+        <h2 className="modal__heading">{title}</h2>
         <p className="modal__message">{message}</p>
         <div className="modal__actions">
           <button
@@ -41,7 +55,7 @@ const Modal: React.FC<ModalProps> = ({
             Ok
           </button>
         </div>
-      </div>
+      </motion.div>
     </Backdrop>
   );
 };

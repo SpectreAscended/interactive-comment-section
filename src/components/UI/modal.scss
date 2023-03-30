@@ -3,8 +3,6 @@
 .modal {
   position: relative;
   top: 30%;
-  // left: 50%;
-  //   transform: translate(-50%, -50%);
   height: min-content;
   background-color: white;
   border-radius: 1rem;
@@ -17,6 +15,7 @@
 
   &__heading {
     font-size: 1.4rem;
+    margin-bottom: 2rem;
   }
 
   &__message {
