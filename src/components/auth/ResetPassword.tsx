@@ -47,7 +47,7 @@ const ResetPasswordForm: React.FC = () => {
         const errorWithCode = err as { code?: string };
         console.error(errorWithCode.code);
         if (errorWithCode.code === 'auth/user-not-found') {
-          setError('Email not found.  Please create an account.');
+          setError('An account with that email does not exist.');
         } else if (errorWithCode.code === 'auth/too-many-requests') {
           setError('Too many requests.  Please try again in a few minutes.');
         } else {
