@@ -11,6 +11,8 @@
   --color-light-gray: hsl(223, 19%, 93%);
   --color-very-light-gray: hsl(228, 33%, 97%);
   --color-white: hsl(0, 0%, 100%);
+
+  --color-error-red: #d12f2f;
 }
 
 *,
@@ -76,7 +78,7 @@ h6 {
 }
 
 .error-message {
-  color: rgb(209, 47, 47);
+  color: #d12f2f;
   padding: 1rem 0.5rem;
   background-color: var(--color-pale-red);
   font-size: 1.2rem;
