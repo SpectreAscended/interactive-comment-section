@@ -1,3 +1,5 @@
+@import '../../styles/mixins.scss';
+
 .button {
   border: none;
 
@@ -14,7 +16,7 @@
     color: var(--color-very-light-gray);
 
     &:hover {
-      background: lighten(hsl(238, 40%, 52%), 20%);
+      @include ui-lighten-primary;
     }
   }
 
