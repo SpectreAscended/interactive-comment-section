@@ -17,11 +17,15 @@ import { useAppSelector } from '../../hooks/stateHooks';
 import { AnimatePresence } from 'framer-motion';
 import './account.scss';
 
+// TODO add error handling
+
 const Account: React.FC = () => {
   const { userData, updateUserImage } = useContext(authContext);
-  const [imageUpload, setImageUpload] = useState<any>(null);
+  const [imageUpload, setImageUpload] = useState<Blob | null>(null);
   const [img, setImg] = useState<string | null>(null);
   const uid = userData.uid;
+
+  console.log(imageUpload);
 
   const dispatch = useDispatch();
   const modalOpen = useAppSelector(state => state.ui.modalOpen);
