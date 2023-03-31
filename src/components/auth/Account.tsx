@@ -32,6 +32,8 @@ const Account: React.FC = () => {
   useEffect(() => {
     if (auth.currentUser) {
       setImg(auth.currentUser?.photoURL);
+    } else {
+      setImg(null);
     }
   }, [auth.currentUser]);
 
@@ -47,6 +49,9 @@ const Account: React.FC = () => {
       updateUserImage('');
       setImg(null);
     } catch (err) {
+      if (err instanceof Error) {
+        console.error(err);
+      }
       setError('Problem deleting image.');
     }
   };
