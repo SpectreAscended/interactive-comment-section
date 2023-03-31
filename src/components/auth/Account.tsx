@@ -117,10 +117,12 @@ const Account: React.FC = () => {
       </AnimatePresence>
       <h1 className="account__heading">Edit Account</h1>
       {error && <p className="error-message">{error}</p>}
-      <figure className="account__settings--userImg">
-        {img ? <img src={img} alt="" className="image" /> : ''}
-      </figure>
-      <h2 style={{ marginLeft: '1rem' }}>{userData.userName}</h2>
+      <aside className="account__settings--user-profile">
+        <figure className="account__settings--userImg">
+          {img ? <img src={img} alt="" className="image" /> : ''}
+        </figure>
+        <h3>{userData.userName}</h3>
+      </aside>
       <div className="account__settings">
         <ul className="account__settings-list">
           <li className="account__settings-list--item">
