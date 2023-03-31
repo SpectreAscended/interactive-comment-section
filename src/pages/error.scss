@@ -1,5 +1,12 @@
 .error {
-  &__heading {
-    color: red;
+  h1 {
+    color: var(--color-error-red);
+    margin-top: 8rem;
+  }
+
+  p {
+    text-align: center;
+    color: var(--color-dark-blue);
+    font-size: 1.2rem;
   }
 }
