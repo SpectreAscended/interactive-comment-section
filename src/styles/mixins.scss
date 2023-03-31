@@ -1,9 +1,29 @@
+@mixin bp-mobile-small {
+  max-width: 374px;
+}
+
 @mixin bp-mobile {
   min-width: 375px;
 }
 
+@mixin bp-tablet-small {
+  min-width: 700px;
+}
+
+@mixin bp-tablet-large {
+  min-width: 850px;
+}
+
+@mixin bp-desktop-small {
+  min-width: 950px;
+}
+
 @mixin bp-desktop {
   min-width: 1440px;
+}
+
+@mixin bp-desktop-large {
+  min-width: 1800px;
 }
 
 @mixin ui-lighten-primary {
