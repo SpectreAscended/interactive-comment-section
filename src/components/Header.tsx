@@ -15,14 +15,28 @@ const Header: React.FC = () => {
       <nav className="header__nav">
         <ul>
           <li>
-            <NavLink to="/">
-              <Button variant="secondary">Home</Button>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive
+                  ? 'header__nav-link header__nav-link--active'
+                  : 'header__nav-link'
+              }
+            >
+              Home
             </NavLink>
           </li>
           {isAuthenticated && (
             <li>
-              <NavLink to="account">
-                <Button variant="secondary">Account</Button>
+              <NavLink
+                to="account"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'header__nav-link header__nav-link--active'
+                    : 'header__nav-link'
+                }
+              >
+                Account
               </NavLink>
             </li>
           )}
@@ -37,7 +51,7 @@ const Header: React.FC = () => {
                 Log out
               </Button>
             ) : (
-              <NavLink to="login" className="header__list--item">
+              <NavLink to="login" className="">
                 <Button>Log in</Button>
               </NavLink>
             )}
