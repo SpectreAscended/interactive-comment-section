@@ -20,12 +20,11 @@ import './account.scss';
 // TODO add error handling
 
 const Account: React.FC = () => {
+  const [error, setError] = useState<string | null>(null);
   const { userData, updateUserImage } = useContext(authContext);
   const [imageUpload, setImageUpload] = useState<Blob | null>(null);
   const [img, setImg] = useState<string | null>(null);
   const uid = userData.uid;
-
-  console.log(imageUpload);
 
   const dispatch = useDispatch();
   const modalOpen = useAppSelector(state => state.ui.modalOpen);
@@ -37,17 +36,27 @@ const Account: React.FC = () => {
   }, [auth.currentUser]);
 
   const deleteImage = async () => {
-    const res = await list(imagesListRef);
-    const item = res.items[0].fullPath;
-    const itemRef = ref(storage, item);
-    deleteObject(itemRef);
-    updateUserImage('');
-    setImg(null);
+    try {
+      if (error) {
+        setError(null);
+      }
+      const res = await list(imagesListRef);
+      const item = res.items[0].fullPath;
+      const itemRef = ref(storage, item);
+      deleteObject(itemRef);
+      updateUserImage('');
+      setImg(null);
+    } catch (err) {
+      setError('Problem deleting image.');
+    }
   };
 
   const imagesListRef = ref(storage, `users/${uid}/userImage/`);
   const uploadImage = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (error) {
+      setError(null);
+    }
 
     if (imageUpload == null) return;
     const imageRef = ref(
@@ -69,8 +78,14 @@ const Account: React.FC = () => {
         updateUserImage(url);
       }
       setImageUpload(null);
-    } catch (err) {}
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error(err);
+      }
+      setError('Problem uploading image.');
+    }
   };
+
   const imageUploadHandler = (e: React.FormEvent<HTMLInputElement>) => {
     if (e.currentTarget.files) {
       setImageUpload(e.currentTarget.files[0]);
@@ -101,6 +116,7 @@ const Account: React.FC = () => {
         )}
       </AnimatePresence>
       <h1 className="account__heading">Edit Account</h1>
+      {error && <p className="error-message">{error}</p>}
       <figure className="account__settings--userImg">
         {img ? <img src={img} alt="" className="image" /> : ''}
       </figure>
