@@ -34,7 +34,7 @@ header {
 }
 
 main {
-  min-height: calc(100vh - 3rem);
+  min-height: calc(90vh - 6rem);
 }
 
 section {
@@ -78,6 +78,7 @@ h4,
 h5,
 h6 {
   overflow-wrap: break-word;
+  color: var(--color-dark-blue);
 }
 
 #root,
