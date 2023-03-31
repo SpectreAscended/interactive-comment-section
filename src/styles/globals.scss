@@ -29,6 +29,14 @@ body {
   background-color: var(--color-very-light-gray);
 }
 
+header {
+  min-height: 3rem;
+}
+
+main {
+  min-height: calc(100vh - 3rem);
+}
+
 section {
   max-width: 100%;
   margin-inline: 1rem;

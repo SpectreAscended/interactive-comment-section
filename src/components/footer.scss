@@ -1,0 +1,16 @@
+.footer {
+  max-width: 30rem;
+  margin: 1rem auto;
+  text-align: center;
+
+  span {
+    margin-inline: 0.25rem;
+  }
+
+  a {
+    transition: color 250ms ease-in-out;
+  }
+  a:hover {
+    color: var(--color-moderate-blue);
+  }
+}

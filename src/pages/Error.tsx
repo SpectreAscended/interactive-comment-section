@@ -1,4 +1,5 @@
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { useRouteError } from 'react-router';
 import './error.scss';
 
@@ -34,6 +35,7 @@ const ErrorBoundary: React.FC = () => {
           <p>{message}</p>
         </section>
       </main>
+      <Footer />
     </>
   );
 };
