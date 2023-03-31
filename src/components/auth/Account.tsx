@@ -119,19 +119,30 @@ const Account: React.FC = () => {
       {error && <p className="error-message">{error}</p>}
       <aside className="account__settings--user-profile">
         <figure className="account__settings--userImg">
-          {img ? <img src={img} alt="" className="image" /> : ''}
+          {img ? (
+            <img
+              src={img}
+              alt={`${userData.userName} profile image`}
+              className="image"
+            />
+          ) : (
+            ''
+          )}
         </figure>
         <h3>{userData.userName}</h3>
       </aside>
       <div className="account__settings">
         <ul className="account__settings-list">
-          <li className="account__settings-list--item">
+          <li className="account__settings-list--item" title="Change password">
             <span>Password</span>
             <Link to="changepassword" className="account__settings-link">
               Change Password
             </Link>
           </li>
-          <li className="account__settings-list--item">
+          <li
+            className="account__settings-list--item"
+            title="Click upload image to set your user image"
+          >
             <span>Profile Image</span>
             <form onSubmit={uploadImage} className="account__settings-form">
               <label htmlFor="profile-image" className="account__settings-link">
@@ -153,7 +164,10 @@ const Account: React.FC = () => {
               </button>
             </form>
           </li>
-          <li className="account__settings-list--item">
+          <li
+            className="account__settings-list--item"
+            title="Delete your profile image"
+          >
             <span>Delete Profile Image</span>
             <button
               className="account__settings-link"
@@ -163,13 +177,19 @@ const Account: React.FC = () => {
               Delete image
             </button>
           </li>
-          <li className="account__settings-list--item">
+          <li
+            className="account__settings-list--item"
+            title="Write a short biography about yourself"
+          >
             <span>Profile Description</span>
             <Link to="description" className="account__settings-link">
               Edit
             </Link>
           </li>
-          <li className="account__settings-list--item">
+          <li
+            className="account__settings-list--item"
+            title="Delete your account. Warning: This can not be undone"
+          >
             <span>Delete Account</span>
             <Link
               to="/delete"
