@@ -16,7 +16,6 @@ import { uiActions } from '../../store/uiSlice';
 import { useAppSelector } from '../../hooks/stateHooks';
 import { AnimatePresence } from 'framer-motion';
 import './account.scss';
-
 // TODO add error handling
 
 const Account: React.FC = () => {
@@ -136,6 +135,7 @@ const Account: React.FC = () => {
         </figure>
         <h3>{userData.userName}</h3>
       </aside>
+
       <div className="account__settings">
         <ul className="account__settings-list">
           <li className="account__settings-list--item" title="Change password">
