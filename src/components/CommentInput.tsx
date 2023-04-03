@@ -1,12 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
 import { authContext } from '../context/AuthContext';
-// import userImage from '../assets/avatars/image-juliusomo.png';
+import { Form, useSubmit, useNavigate } from 'react-router-dom';
 import Button from './UI/Button';
 import './commentInput.scss';
 
 const CommentInput: React.FC = () => {
   const { userData } = useContext(authContext);
+  const navigate = useNavigate();
+  const submit = useSubmit();
   const [userImg, setUserImg] = useState<any>(userData.userImage);
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     if (userData.userImage) {
@@ -14,8 +17,35 @@ const CommentInput: React.FC = () => {
     }
   }, [userData.userImage]);
 
+  const inputHander = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    setInputValue(e.currentTarget.value);
+  };
+
+  const submitCommentHandler = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!userData) {
+      navigate('/login');
+      return;
+    }
+
+    let formData = new FormData();
+
+    if (inputValue.trim() === '') {
+      return;
+    }
+
+    formData.append('comment-input', inputValue);
+
+    submit(formData, { method: 'post' });
+    setInputValue('');
+  };
+
   return (
-    <form className="comment-input">
+    <Form
+      className="comment-input"
+      method="post"
+      onSubmit={submitCommentHandler}
+    >
       <figure className="comment-input__user-img">
         {userImg ? <img src={userImg} alt="user img" /> : ''}
       </figure>
@@ -25,10 +55,12 @@ const CommentInput: React.FC = () => {
           id="comment-input"
           className="comment-input__input"
           rows={3}
+          value={inputValue}
+          onChange={inputHander}
         />
-        <Button onClick={() => {}}>Send</Button>
+        <Button type="submit">Send</Button>
       </div>
-    </form>
+    </Form>
   );
 };
 

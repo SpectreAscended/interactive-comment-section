@@ -5,7 +5,9 @@ import LoginPage from './pages/Login';
 import SignupPage from './pages/Signup';
 import ResetPasswordPage from './pages/ResetPassword';
 import ChangePasswordPage from './pages/ChangePassword';
-import CommentSectionPage from './pages/CommentSection';
+import CommentSectionPage, {
+  action as postCommentAction,
+} from './pages/CommentSection';
 import AccountPage from './pages/Account';
 
 export const router = createBrowserRouter([
@@ -17,6 +19,7 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <CommentSectionPage />,
+        action: postCommentAction,
       },
       {
         path: '/login',
