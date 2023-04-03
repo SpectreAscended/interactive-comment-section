@@ -28,6 +28,7 @@ export const action = async ({ request }: any) => {
       commentBody: await data.get('comment-input'),
       date: new Date(),
       userData,
+      rating: 1,
     };
 
     const res = await fetch(`${baseUrl}.json`, {
@@ -39,7 +40,6 @@ export const action = async ({ request }: any) => {
     if (!res.ok) {
       throw json({ message: 'Problem posting comment', status: 500 });
     }
-    console.log(res);
 
     return redirect('/');
   } catch (err) {
