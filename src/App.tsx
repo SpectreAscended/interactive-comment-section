@@ -7,6 +7,7 @@ import ResetPasswordPage from './pages/ResetPassword';
 import ChangePasswordPage from './pages/ChangePassword';
 import CommentSectionPage, {
   action as postCommentAction,
+  loader as commentLoader,
 } from './pages/CommentSection';
 import AccountPage from './pages/Account';
 
@@ -20,6 +21,7 @@ export const router = createBrowserRouter([
         index: true,
         element: <CommentSectionPage />,
         action: postCommentAction,
+        loader: commentLoader,
       },
       {
         path: '/login',

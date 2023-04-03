@@ -9,16 +9,14 @@ interface CommentCardProps {
   comment: {
     id: string;
     content: string;
-    createdAt: string;
-    score: number;
-    user: {
-      image: {
-        png: string;
-        webp: string;
-      };
-      username: string;
+    createdAt: Date;
+    rating: number;
+    userData: {
+      userName: string;
+      photoURL: string;
+      email: string;
+      uid: string;
     };
-    replies: any;
   };
 }
 
@@ -28,26 +26,40 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
   useEffect(() => {
     const fetchImage = async () => {
       try {
-        const res = await import(`${comment.user.image.png}`);
+        const res = await import(`${comment.userData.photoURL}`);
         setImage(res.default);
       } catch (err) {}
     };
     fetchImage();
   }, []);
 
+  const formatDate = (inputDate: Date) => {
+    const currentDate = new Date(inputDate);
+    return currentDate.toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  };
+
+  const commentCreatedAt = formatDate(comment.createdAt);
+
   return (
     <article className="comment-card">
-      <Counter defaultCount={comment.score} />
+      <Counter defaultCount={comment.rating} />
       <div className="comment-card__content">
         <div className="comment-card__user-data">
           <figure className="comment-card__user-data--img">
-            <img src={image} alt={`${comment.user.username} user image`} />
+            <img
+              src={comment.userData.photoURL}
+              alt={`${comment.userData.userName} user image`}
+            />
           </figure>
           <span className="comment-card__user-data--username">
-            {comment.user.username}
+            {comment.userData.userName}
           </span>
           <span className="comment-card__user-data--created-at">
-            {comment.createdAt}
+            {commentCreatedAt}
           </span>
           <button className="comment-card__reply">
             <FontAwesomeIcon icon={faReply} style={{ marginRight: '.5rem' }} />
