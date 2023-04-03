@@ -27,18 +27,25 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
   // const data = DUMMY_DATA;
   const { isAuthenticated } = useContext(authContext);
 
+  const commentArr = comments.map(comment => {
+    return (
+      <li key={comment.id}>
+        <CommentCard comment={comment} />
+      </li>
+    );
+  });
+
+  const commentArrCopy = commentArr.slice();
+  commentArrCopy.reverse();
+
   return (
     <section className="comment-list">
-      <ul>
-        {comments.map(comment => {
-          return (
-            <li key={comment.id}>
-              <CommentCard comment={comment} />
-            </li>
-          );
-        })}
-        {isAuthenticated && <CommentInput />}
-      </ul>
+      {
+        <ul>
+          {commentArrCopy ? commentArrCopy : <p>No content</p>}
+          {isAuthenticated && <CommentInput />}
+        </ul>
+      }
     </section>
   );
 };

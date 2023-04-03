@@ -22,6 +22,7 @@ interface Comment {
 const CommentSectionPage: React.FC = () => {
   const data = useLoaderData() as Comment[];
   // console.log(data);
+
   return <CommentList comments={data} />;
 };
 
@@ -75,11 +76,13 @@ export const loader = async () => {
     }
     const data = await res.json();
 
+    if (!data) {
+      return null;
+    }
+
     const commentsList = Object.entries(data).map((comment: any) => {
       return { id: comment[0], ...comment[1] };
     });
-    console.log(commentsList);
-    // console.log(formattedData);
 
     return commentsList;
   } catch (err) {

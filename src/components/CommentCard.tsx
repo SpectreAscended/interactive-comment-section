@@ -23,15 +23,15 @@ interface CommentCardProps {
 const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
   const [image, setImage] = useState();
 
-  useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        const res = await import(`${comment.userData.photoURL}`);
-        setImage(res.default);
-      } catch (err) {}
-    };
-    fetchImage();
-  }, []);
+  // useEffect(() => {
+  //   const fetchImage = async () => {
+  //     try {
+  //       const res = await import(`${comment.userData.photoURL}`);
+  //       setImage(res.default);
+  //     } catch (err) {}
+  //   };
+  //   fetchImage();
+  // }, []);
 
   const formatDate = (inputDate: Date) => {
     const currentDate = new Date(inputDate);
@@ -43,6 +43,9 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
   };
 
   const commentCreatedAt = formatDate(comment.createdAt);
+  console.log(commentCreatedAt);
+
+  console.log(comment.content);
 
   return (
     <article className="comment-card">
