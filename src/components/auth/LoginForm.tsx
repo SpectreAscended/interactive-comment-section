@@ -2,18 +2,30 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../UI/Button';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import useValidation, {
+  emailValidation,
+  inputErrorClassesHandler,
+} from '../../hooks/useValidation';
 import { auth } from '../../firebase';
 import './authForm.scss';
 
 const LoginForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
-  const [emailInputValue, setEmailInputValue] = useState('');
+  // const [emailInputValue, setEmailInputValue] = useState('');
   const [passwordInputValue, setPasswordInputValue] = useState('');
   const navigate = useNavigate();
 
-  const emailInputHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    setEmailInputValue(e.currentTarget.value);
-  };
+  // const emailInputHandler = (e: React.FormEvent<HTMLInputElement>) => {
+  //   setEmailInputValue(e.currentTarget.value);
+  // };
+
+  const {
+    inputValue: emailInputValue,
+    inputValueHandler: emailInputHandler,
+    inputBlurHandler: emailBlurHandler,
+    hasError: emailHasError,
+    isValid: emailIsValid,
+  } = useValidation(emailValidation);
 
   const passwordInputHandler = (e: React.FormEvent<HTMLInputElement>) => {
     setPasswordInputValue(e.currentTarget.value);
@@ -59,6 +71,12 @@ const LoginForm: React.FC = () => {
     }
   };
 
+  const emailClasses = inputErrorClassesHandler(
+    'auth-form__input',
+    emailHasError
+  );
+  console.log(emailClasses);
+
   return (
     <section>
       <form className="auth-form" onSubmit={loginHandler}>
@@ -71,11 +89,17 @@ const LoginForm: React.FC = () => {
           type="email"
           name="email"
           id="email"
-          className="auth-form__input"
+          className={emailClasses}
           autoComplete="email"
           value={emailInputValue}
           onChange={emailInputHandler}
+          onBlur={emailBlurHandler}
         />
+        {emailHasError && (
+          <p className="auth-form__error-message">
+            Please enter a valid email.
+          </p>
+        )}
 
         <label htmlFor="password" className="auth-form__label">
           Password

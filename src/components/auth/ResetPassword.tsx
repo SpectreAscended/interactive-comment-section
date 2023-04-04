@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useNavigate, useNavigation, Link } from 'react-router-dom';
-import useValidation, { emailValidation } from '../../hooks/useValidation';
+import useValidation, {
+  emailValidation,
+  inputErrorClassesHandler,
+} from '../../hooks/useValidation';
 import Button from '../UI/Button';
 import { auth } from '../../firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
@@ -24,9 +27,10 @@ const ResetPasswordForm: React.FC = () => {
     resetInput: resetEmailInput,
   } = useValidation(emailValidation);
 
-  const inputClasses = `auth-form__input ${
-    emailHasError ? 'auth-form__input--error' : ''
-  }`;
+  const emailClasses = inputErrorClassesHandler(
+    'auth-form__input',
+    emailHasError
+  );
 
   const resetPasswordHandler = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,7 +78,7 @@ const ResetPasswordForm: React.FC = () => {
           id="email"
           name="email"
           autoComplete="email"
-          className={inputClasses}
+          className={emailClasses}
           value={emailInputValue}
           onChange={emailInputValueHandler}
           onBlur={emailBlurHandler}

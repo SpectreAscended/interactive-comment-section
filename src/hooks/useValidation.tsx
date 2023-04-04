@@ -49,3 +49,10 @@ export const emailValidation = (input: string) => {
 export const passwordValidation = (input: string) => {
   return input.trim().length >= 6;
 };
+
+export const inputErrorClassesHandler = (
+  baseClass: string,
+  inputHasError: boolean
+) => {
+  return `${baseClass} ${inputHasError ? `${baseClass}--error` : ''}`;
+};

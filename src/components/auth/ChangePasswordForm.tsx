@@ -3,7 +3,10 @@ import { auth } from '../../firebase';
 import { signInWithEmailAndPassword, updatePassword } from 'firebase/auth';
 import Button from '../UI/Button';
 import useSimpleInput from '../../hooks/useSimpleInput';
-import useValidation, { passwordValidation } from '../../hooks/useValidation';
+import useValidation, {
+  passwordValidation,
+  inputErrorClassesHandler,
+} from '../../hooks/useValidation';
 import { Link, useNavigate } from 'react-router-dom';
 import { REDIRECT_TIMER } from '../../appConfig';
 import './authForm.scss';
@@ -93,12 +96,14 @@ const ChangePasswordForm: React.FC = () => {
     }
   };
 
-  const inputClassesHandler = (inputHasError: boolean) => {
-    return `auth-form__input ${inputHasError ? 'auth-form__input--error' : ''}`;
-  };
-
-  const newPasswordClasses = inputClassesHandler(newPasswordHasError);
-  const confirmPasswordClasses = inputClassesHandler(confirmPasswordHasError);
+  const newPasswordClasses = inputErrorClassesHandler(
+    'auth-form__input',
+    newPasswordHasError
+  );
+  const confirmPasswordClasses = inputErrorClassesHandler(
+    'auth-form__input',
+    confirmPasswordHasError
+  );
 
   return (
     <section>

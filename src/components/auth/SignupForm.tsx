@@ -5,6 +5,7 @@ import useValidation, {
   emptyFieldValidation,
   emailValidation,
   passwordValidation,
+  inputErrorClassesHandler,
 } from '../../hooks/useValidation';
 import { auth } from '../../firebase';
 import { createUserWithEmailAndPassword, updateProfile } from '@firebase/auth';
@@ -44,13 +45,22 @@ const SignupForm: React.FC = () => {
     hasError: confirmPasswordHasError,
   } = useValidation(passwordValidation);
 
-  const inputClassesHandler = (inputHasError: boolean) => {
-    return `auth-form__input ${inputHasError ? 'auth-form__input--error' : ''}`;
-  };
-  const nameClasses = inputClassesHandler(nameHasError);
-  const emailClasses = inputClassesHandler(emailHasError);
-  const passwordClasses = inputClassesHandler(passwordHasError);
-  const confirmPasswordClasses = inputClassesHandler(confirmPasswordHasError);
+  const nameClasses = inputErrorClassesHandler(
+    'auth-form__input',
+    nameHasError
+  );
+  const emailClasses = inputErrorClassesHandler(
+    'auth-form__input',
+    emailHasError
+  );
+  const passwordClasses = inputErrorClassesHandler(
+    'auth-form__input',
+    passwordHasError
+  );
+  const confirmPasswordClasses = inputErrorClassesHandler(
+    'auth-form__input',
+    confirmPasswordHasError
+  );
 
   const formSubmissionHandler = async (e: React.FormEvent) => {
     e.preventDefault();
