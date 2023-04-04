@@ -1,4 +1,5 @@
 import CommentCard from './CommentCard';
+import { useState } from 'react';
 import { Comment } from '../types';
 import './commentList.scss';
 

@@ -3,18 +3,9 @@ import { auth } from '../firebase';
 
 const baseUrl = import.meta.env.VITE_FIREBASE_DB_HOST;
 
-const currentUser = auth.currentUser;
-
 export const addComment = async (content: string, currentUser: any) => {
   try {
-    // const formData = await request.formData();
-    // console.log(content);
-    // if (!currentUser) {
-    //   throw json({ message: 'Must be logged in to post', status: 500 });
-    // }
-
     if (!currentUser) return;
-    console.log(currentUser);
 
     const userData = {
       uid: currentUser.uid,
@@ -29,7 +20,7 @@ export const addComment = async (content: string, currentUser: any) => {
       userData,
       rating: 1,
     };
-    console.log(postBody);
+
     const res = await fetch(`${baseUrl}.json`, {
       method: 'POST',
       headers: { ContentType: 'application/json' },
@@ -53,7 +44,6 @@ export const deleteComment = async (
 ) => {
   if (!currentUser) return;
 
-  console.log(currentUser.uid, commentUid, commentId);
   if (currentUser.uid !== commentUid) return;
 
   try {
@@ -64,8 +54,6 @@ export const deleteComment = async (
     if (!res.ok) {
       throw new Error('Problem deleting comment');
     }
-
-    return redirect('/');
   } catch (err) {
     if (err instanceof Error) {
       console.error(err.message);
