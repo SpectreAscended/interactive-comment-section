@@ -3,6 +3,7 @@ import { authContext } from '../context/AuthContext';
 import CommentCard from './CommentCard';
 import CommentInput from './CommentInput';
 import DUMMY_DATA from '../store/DUMMY_DATA';
+import './commentList.scss';
 
 interface UserData {
   email: string;
@@ -40,12 +41,8 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
 
   return (
     <section className="comment-list">
-      {
-        <ul>
-          {commentArrCopy ? commentArrCopy : <p>No content</p>}
-          {isAuthenticated && <CommentInput />}
-        </ul>
-      }
+      {<ul>{commentArrCopy ? commentArrCopy : <p>No content</p>}</ul>}
+      {isAuthenticated && <CommentInput />}
     </section>
   );
 };

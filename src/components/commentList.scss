@@ -1,1 +1,6 @@
-
+.comment-list {
+  ul {
+    max-height: 60vh;
+    overflow-y: scroll;
+  }
+}
