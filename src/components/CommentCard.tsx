@@ -1,38 +1,15 @@
-import { useState, useEffect } from 'react';
 import Counter from './UI/Counter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReply } from '@fortawesome/free-solid-svg-icons';
+import { Comment } from '../types';
 
 import './commentCard.scss';
 
 interface CommentCardProps {
-  comment: {
-    id: string;
-    content: string;
-    createdAt: Date;
-    rating: number;
-    userData: {
-      userName: string;
-      photoURL: string;
-      email: string;
-      uid: string;
-    };
-  };
+  comment?: Comment;
 }
 
 const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
-  const [image, setImage] = useState();
-
-  // useEffect(() => {
-  //   const fetchImage = async () => {
-  //     try {
-  //       const res = await import(`${comment.userData.photoURL}`);
-  //       setImage(res.default);
-  //     } catch (err) {}
-  //   };
-  //   fetchImage();
-  // }, []);
-
   const formatDate = (inputDate: Date) => {
     const currentDate = new Date(inputDate);
     return currentDate.toLocaleDateString('en-US', {
@@ -42,6 +19,15 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
     });
   };
 
+  if (!comment) {
+    return (
+      <article className="comment-card">
+        <div className="comment-card__content">
+          <h3 className="comment-card__no-items">No posts available...</h3>
+        </div>
+      </article>
+    );
+  }
   const commentCreatedAt = formatDate(comment.createdAt);
   console.log(commentCreatedAt);
 

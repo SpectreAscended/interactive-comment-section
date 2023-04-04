@@ -5,10 +5,10 @@ import LoginPage from './pages/Login';
 import SignupPage from './pages/Signup';
 import ResetPasswordPage from './pages/ResetPassword';
 import ChangePasswordPage from './pages/ChangePassword';
-import CommentSectionPage, {
+import DashboardPage, {
   action as postCommentAction,
   loader as commentLoader,
-} from './pages/CommentSection';
+} from './pages/Dashboard';
 import AccountPage from './pages/Account';
 
 export const router = createBrowserRouter([
@@ -19,7 +19,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <CommentSectionPage />,
+        element: <DashboardPage />,
         action: postCommentAction,
         loader: commentLoader,
       },

@@ -1,5 +1,4 @@
 .comment-card {
-  // max-width: 50rem;
   border-radius: 1rem;
   background-color: var(--color-white);
   display: flex;
@@ -7,8 +6,15 @@
   padding: 0.5rem;
   padding-bottom: 1rem;
   color: var(--color-grayish-blue);
+
   &__content {
     flex-basis: 90%;
+  }
+
+  &__no-items {
+    text-align: center;
+    padding: 1rem;
+    color: var(--color-dark-blue);
   }
 
   &__user-data {

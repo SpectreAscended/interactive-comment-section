@@ -1,32 +1,17 @@
 import { json, redirect, useLoaderData } from 'react-router-dom';
 import { auth } from '../firebase';
-import CommentList from '../components/CommentList';
+import { Comment } from '../types';
+import Dashboard from '../components/Dashboard';
 
 const baseUrl = import.meta.env.VITE_FIREBASE_DB_HOST;
 
-interface UserData {
-  email: string;
-  photoURL: string;
-  uid: string;
-  userName: string;
-}
-
-interface Comment {
-  id: string;
-  content: string;
-  createdAt: Date;
-  rating: number;
-  userData: UserData;
-}
-
-const CommentSectionPage: React.FC = () => {
+const DashboardPage: React.FC = () => {
   const data = useLoaderData() as Comment[];
-  // console.log(data);
 
-  return <CommentList comments={data} />;
+  return <Dashboard comments={data} />;
 };
 
-export default CommentSectionPage;
+export default DashboardPage;
 
 export const action = async ({ request }: any) => {
   try {
