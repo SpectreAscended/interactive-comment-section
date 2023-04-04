@@ -15,9 +15,9 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
     );
   });
 
-  // const commentListItems = commentListArr.slice();
-  // commentListItems.reverse();
-  const commentListItems = null;
+  const commentListItems = commentListArr.slice();
+  commentListItems.reverse();
+  // const commentListItems = null;
 
   return (
     <section className="comment-list">
