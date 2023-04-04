@@ -50,7 +50,6 @@ export const deleteComment = async (
     const res = await fetch(`${baseUrl}/${commentId}.json`, {
       method: 'DELETE',
     });
-    console.log(res);
     if (!res.ok) {
       throw new Error('Problem deleting comment');
     }
