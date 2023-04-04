@@ -24,6 +24,15 @@
     gap: 1rem;
     margin-block: 1rem;
 
+    &--users-post {
+      color: var(--color-white);
+      background-color: var(--color-moderate-blue);
+      padding: 0.45rem;
+      text-transform: uppercase;
+      border-radius: 0.25rem;
+      font-size: 0.65rem;
+    }
+
     &--img {
       width: 3rem;
       height: 3rem;
@@ -48,12 +57,32 @@
     }
   }
 
-  &__reply {
+  &__actions {
     margin-left: auto;
+  }
+
+  button {
     background-color: transparent;
     border: none;
-    color: var(--color-moderate-blue);
-    font-weight: 500;
     cursor: pointer;
+    transition: color 250ms ease-in-out;
+    font-weight: 500;
+  }
+
+  &__delete {
+    color: var(--color-soft-red);
+    margin-right: 1rem;
+
+    &:hover {
+      color: var(--color-pale-red);
+    }
+  }
+
+  &__reply {
+    color: var(--color-moderate-blue);
+
+    &:hover {
+      color: lighten(hsl(238, 40%, 52%), 20%);
+    }
   }
 }

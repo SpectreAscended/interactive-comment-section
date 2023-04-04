@@ -1,6 +1,8 @@
+import { useContext } from 'react';
+import { authContext } from '../context/AuthContext';
 import Counter from './UI/Counter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faReply } from '@fortawesome/free-solid-svg-icons';
+import { faReply, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Comment } from '../types';
 
 import './commentCard.scss';
@@ -10,6 +12,10 @@ interface CommentCardProps {
 }
 
 const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
+  const { userData } = useContext(authContext);
+  const userComment = userData.uid === comment?.userData.uid;
+
+  //TODO Move this to its own file, and make more customizable
   const formatDate = (inputDate: Date) => {
     const currentDate = new Date(inputDate);
     return currentDate.toLocaleDateString('en-US', {
@@ -47,13 +53,30 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
           <span className="comment-card__user-data--username">
             {comment.userData.userName}
           </span>
+          {userComment && (
+            <span className="comment-card__user-data--users-post">You</span>
+          )}
           <span className="comment-card__user-data--created-at">
             {commentCreatedAt}
           </span>
-          <button className="comment-card__reply">
-            <FontAwesomeIcon icon={faReply} style={{ marginRight: '.5rem' }} />
-            Reply
-          </button>
+          <div className="comment-card__actions">
+            {userComment && (
+              <button className="comment-card__delete">
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  style={{ marginRight: '.5rem' }}
+                />
+                Delete
+              </button>
+            )}
+            <button className="comment-card__reply">
+              <FontAwesomeIcon
+                icon={faReply}
+                style={{ marginRight: '.5rem' }}
+              />
+              Reply
+            </button>
+          </div>
         </div>
         <p className="comment-card__comment-body">{comment.content}</p>
       </div>
