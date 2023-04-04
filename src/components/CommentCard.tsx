@@ -35,9 +35,6 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
     );
   }
   const commentCreatedAt = formatDate(comment.createdAt);
-  console.log(commentCreatedAt);
-
-  console.log(comment.content);
 
   return (
     <article className="comment-card">
