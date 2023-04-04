@@ -35,7 +35,6 @@ const CommentInput: React.FC = () => {
     }
 
     formData.append('comment-input', inputValue);
-
     submit(formData, { method: 'post' });
     setInputValue('');
   };
@@ -44,6 +43,7 @@ const CommentInput: React.FC = () => {
     <Form
       className="comment-input"
       method="post"
+      action="/"
       onSubmit={submitCommentHandler}
     >
       <figure className="comment-input__user-img">

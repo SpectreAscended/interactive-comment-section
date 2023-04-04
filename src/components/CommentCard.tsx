@@ -1,10 +1,11 @@
 import { useContext } from 'react';
+import { useSubmit, redirect } from 'react-router-dom';
 import { authContext } from '../context/AuthContext';
 import Counter from './UI/Counter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReply, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Comment } from '../types';
-
+import { deleteComment } from '../utilities/postActions';
 import './commentCard.scss';
 
 interface CommentCardProps {
@@ -12,6 +13,7 @@ interface CommentCardProps {
 }
 
 const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
+  const submit = useSubmit();
   const { userData } = useContext(authContext);
   const userComment = userData.uid === comment?.userData.uid;
 
@@ -36,6 +38,13 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
   }
   const commentCreatedAt = formatDate(comment.createdAt);
 
+  const deleteCommentHandler = async () => {
+    console.log('running');
+    if (!userComment) return;
+    await deleteComment(comment.id, comment.userData.uid, userData);
+    return redirect('/');
+  };
+
   return (
     <article className="comment-card">
       <Counter defaultCount={comment.rating} />
@@ -58,7 +67,10 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
           </span>
           <div className="comment-card__actions">
             {userComment && (
-              <button className="comment-card__delete">
+              <button
+                className="comment-card__delete"
+                onClick={deleteCommentHandler}
+              >
                 <FontAwesomeIcon
                   icon={faTrash}
                   style={{ marginRight: '.5rem' }}
