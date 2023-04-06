@@ -1,6 +1,3 @@
-import { redirect } from 'react-router-dom';
-import { auth } from '../firebase';
-
 const baseUrl = import.meta.env.VITE_FIREBASE_DB_HOST;
 
 export const addComment = async (content: string, currentUser: any) => {
@@ -44,7 +41,9 @@ export const deleteComment = async (
 ) => {
   if (!currentUser) return;
 
+  console.log(currentUser.uid, commentUid);
   if (currentUser.uid !== commentUid) return;
+  console.log('running');
 
   try {
     const res = await fetch(`${baseUrl}/${commentId}.json`, {

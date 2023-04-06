@@ -5,7 +5,7 @@ import './modal.scss';
 interface ModalProps {
   title: string;
   message: string;
-  onPrimary: () => void;
+  onPrimary?: () => void;
   onSecondary?: () => void;
 }
 

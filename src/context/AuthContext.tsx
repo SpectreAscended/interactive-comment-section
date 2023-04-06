@@ -56,7 +56,7 @@ export const AuthProvider: React.FC<AuthContextProviderProps> = ({
     return () => {
       listener();
     };
-  }, []);
+  }, [auth]);
 
   const updateUserImage = (img: string) => {
     setUserData(prev => {
