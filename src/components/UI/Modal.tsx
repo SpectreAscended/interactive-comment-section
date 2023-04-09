@@ -1,11 +1,12 @@
 import Backdrop from './Backdrop';
 import { motion } from 'framer-motion';
 import './modal.scss';
+import { CommentDeleteData } from '../../types';
 
 interface ModalProps {
   title: string;
   message: string;
-  onPrimary?: () => void;
+  onPrimary?: (() => void) | ((commentData: CommentDeleteData) => void);
   onSecondary?: () => void;
 }
 

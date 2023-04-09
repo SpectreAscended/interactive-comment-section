@@ -1,13 +1,14 @@
 import Counter from './UI/Counter';
-import { Comment } from '../types';
+import { Comment, CommentDeleteData } from '../types';
 import CommentCardUser from './CommentCardUser';
 import './commentCard.scss';
 
 interface CommentCardProps {
   comment?: Comment;
+  onDelete?: (a: CommentDeleteData) => void;
 }
 
-const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
+const CommentCard: React.FC<CommentCardProps> = ({ comment, onDelete }) => {
   if (!comment) {
     return (
       <article className="comment-card">
@@ -22,7 +23,7 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
     <article className="comment-card">
       <Counter defaultCount={comment.rating} />
       <div className="comment-card__content">
-        <CommentCardUser comment={comment} />
+        <CommentCardUser comment={comment} onDelete={onDelete} />
         <p className="comment-card__comment-body">{comment.content}</p>
       </div>
     </article>

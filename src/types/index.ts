@@ -12,3 +12,8 @@ export interface Comment {
   rating: number;
   userData: UserData;
 }
+
+export interface CommentDeleteData {
+  commentId: string;
+  commentUid: string;
+}
