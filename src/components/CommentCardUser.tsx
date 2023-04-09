@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Form, useSubmit } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReply, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +9,8 @@ import formatDate from '../utilities/formatDate';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../hooks/stateHooks';
 import { CommentDeleteData } from '../types';
-import { auth } from '../firebase';
+import { auth, storage } from '../firebase';
+import { list, getDownloadURL, ref } from 'firebase/storage';
 import './commentCardUser.scss';
 
 interface CommentCardUserProps {
@@ -29,26 +31,44 @@ const CommentCardUser: React.FC<CommentCardUserProps> = ({
   const dispatch = useDispatch();
   const modalOpen = useAppSelector(state => state.ui.modalOpen);
 
+  const [userImg, setUserImg] = useState<string | null>(null);
+
   //TODO Move this to its own file, and make more customizable, and more advanced ei: Today, Yesterday, 3 days ago etc...
 
   const userComment = userData && userData.uid === comment?.userData.uid;
 
   const commentCreatedAt = formatDate(comment.createdAt);
 
+  // This makes too many requests.  Figure out a way to stop that.
   const loadUserImg = async () => {
     const userId = comment.userData.uid;
 
-    // const fetchUserImg =
+    const imageListRef = ref(
+      storage,
+      `users/${comment.userData.uid}/userImage/`
+    );
+
+    const imageList = await list(imageListRef);
+    const imageUrl = await getDownloadURL(imageList.items[0]);
+
+    if (imageUrl) {
+      setUserImg(imageUrl);
+    } else setUserImg(null);
+    // console.log(imageUrl);
 
     // BUGLEC We need to load userImg from the user ID, not save the picture in the comment itself, because if the users image changes, that will not be reflected.
   };
+
+  useEffect(() => {
+    loadUserImg();
+  }, [loadUserImg]);
 
   return (
     <>
       <div className="user-data">
         <figure className="user-data__img">
           <img
-            src={comment.userData.photoURL}
+            src={userImg ? userImg : undefined}
             alt={`${comment.userData.userName} user image`}
           />
         </figure>
