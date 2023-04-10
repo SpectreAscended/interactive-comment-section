@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Form, useSubmit } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReply, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Comment } from '../types';
-import Modal from './UI/Modal';
 import { uiActions } from '../store/uiSlice';
 import formatDate from '../utilities/formatDate';
 import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../hooks/stateHooks';
 import { CommentDeleteData } from '../types';
 import { auth, storage } from '../firebase';
 import { list, getDownloadURL, ref } from 'firebase/storage';
@@ -27,13 +24,9 @@ const CommentCardUser: React.FC<CommentCardUserProps> = ({
   onDelete,
 }) => {
   const userData = auth.currentUser;
-  const submit = useSubmit();
   const dispatch = useDispatch();
-  const modalOpen = useAppSelector(state => state.ui.modalOpen);
 
   const [userImg, setUserImg] = useState<string | null>(null);
-
-  //TODO Move this to its own file, and make more customizable, and more advanced ei: Today, Yesterday, 3 days ago etc...
 
   const userComment = userData && userData.uid === comment?.userData.uid;
 
@@ -41,22 +34,23 @@ const CommentCardUser: React.FC<CommentCardUserProps> = ({
 
   // This makes too many requests.  Figure out a way to stop that.
   const loadUserImg = async () => {
-    const userId = comment.userData.uid;
-
     const imageListRef = ref(
       storage,
       `users/${comment.userData.uid}/userImage/`
     );
 
-    const imageList = await list(imageListRef);
-    const imageUrl = await getDownloadURL(imageList.items[0]);
+    try {
+      const imageList = await list(imageListRef);
+      const imageUrl = await getDownloadURL(imageList.items[0]);
 
-    if (imageUrl) {
-      setUserImg(imageUrl);
-    } else setUserImg(null);
-    // console.log(imageUrl);
-
-    // BUGLEC We need to load userImg from the user ID, not save the picture in the comment itself, because if the users image changes, that will not be reflected.
+      if (imageUrl) {
+        setUserImg(imageUrl);
+      } else setUserImg(null);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error(err);
+      }
+    }
   };
 
   useEffect(() => {
@@ -67,30 +61,39 @@ const CommentCardUser: React.FC<CommentCardUserProps> = ({
     <>
       <div className="user-data">
         <figure className="user-data__img">
-          <img
-            src={userImg ? userImg : undefined}
-            alt={`${comment.userData.userName} user image`}
-          />
+          {userImg ? (
+            <img
+              src={userImg}
+              alt={`${comment.userData.userName} user image`}
+            />
+          ) : null}
         </figure>
         <span className="user-data__username">{comment.userData.userName}</span>
         {userComment && <span className="user-data__users-post">You</span>}
         <span className="user-data__created-at">{commentCreatedAt}</span>
 
-        <Form className="user-data__actions">
-          {userComment && (
-            <button className="user-data__delete" type="submit">
-              <FontAwesomeIcon
-                icon={faTrash}
-                style={{ marginRight: '.5rem' }}
-              />
-              Delete
-            </button>
-          )}
-          <button className="user-data__reply">
-            <FontAwesomeIcon icon={faReply} style={{ marginRight: '.5rem' }} />
-            Reply
+        {userComment && (
+          <button
+            className="user-data__delete"
+            type="button"
+            onClick={() => {
+              dispatch(uiActions.openModal());
+              dispatch(
+                uiActions.setModalData({
+                  commentId: comment.id,
+                  commentUid: comment.userData.uid,
+                })
+              );
+            }}
+          >
+            <FontAwesomeIcon icon={faTrash} style={{ marginRight: '.5rem' }} />
+            Delete
           </button>
-        </Form>
+        )}
+        <button className="user-data__reply">
+          <FontAwesomeIcon icon={faReply} style={{ marginRight: '.5rem' }} />
+          Reply
+        </button>
       </div>
     </>
   );

@@ -6,7 +6,7 @@ import { CommentDeleteData } from '../../types';
 interface ModalProps {
   title: string;
   message: string;
-  onPrimary?: (() => void) | ((commentData: CommentDeleteData) => void);
+  onPrimary?: () => void;
   onSecondary?: () => void;
 }
 

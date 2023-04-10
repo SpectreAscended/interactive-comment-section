@@ -15,14 +15,19 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
   const submit = useSubmit();
   const dispatch = useDispatch();
   const modalOpen = useAppSelector(state => state.ui.modalOpen);
+  const modalData = useAppSelector(state => state.ui.modalData);
 
-  const deleteComment = (commentData: CommentDeleteData) => {
+  const deleteComment = () => {
     const formData = new FormData();
-    console.log(commentData.commentId, commentData.commentUid);
-    formData.append('comment-id', commentData.commentId);
-    formData.append('comment-uid', commentData.commentUid);
+    if (!modalData) return;
+
+    // console.log(commentData.commentId, commentData.commentUid);
+    formData.append('comment-id', modalData.commentId);
+    formData.append('comment-uid', modalData.commentUid);
 
     submit(formData, { method: 'delete' });
+    dispatch(uiActions.closeModal());
+    dispatch(uiActions.resetModalData());
   };
 
   // const deleteCommentHandler = () => {
@@ -43,7 +48,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
 
   return (
     <section className="comment-list">
-      {/* {modalOpen && (
+      {modalOpen && (
         <Modal
           title="Delete comment"
           message="Are you sure?"
@@ -52,7 +57,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
             dispatch(uiActions.closeModal());
           }}
         />
-      )} */}
+      )}
       {<ul>{commentListItems ? commentListItems : <CommentCard />}</ul>}
     </section>
   );
