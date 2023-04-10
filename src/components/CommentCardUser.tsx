@@ -71,25 +71,29 @@ const CommentCardUser: React.FC<CommentCardUserProps> = ({
         <span className="user-data__username">{comment.userData.userName}</span>
         {userComment && <span className="user-data__users-post">You</span>}
         <span className="user-data__created-at">{commentCreatedAt}</span>
-
-        {userComment && (
-          <button
-            className="user-data__delete"
-            type="button"
-            onClick={() => {
-              dispatch(uiActions.openModal());
-              dispatch(
-                uiActions.setModalData({
-                  commentId: comment.id,
-                  commentUid: comment.userData.uid,
-                })
-              );
-            }}
-          >
-            <FontAwesomeIcon icon={faTrash} style={{ marginRight: '.5rem' }} />
-            Delete
-          </button>
-        )}
+        <div className="user-data__controls">
+          {userComment && (
+            <button
+              className="user-data__delete"
+              type="button"
+              onClick={() => {
+                dispatch(uiActions.openModal());
+                dispatch(
+                  uiActions.setModalData({
+                    commentId: comment.id,
+                    commentUid: comment.userData.uid,
+                  })
+                );
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faTrash}
+                style={{ marginRight: '.5rem' }}
+              />
+              Delete
+            </button>
+          )}
+        </div>
         <button className="user-data__reply">
           <FontAwesomeIcon icon={faReply} style={{ marginRight: '.5rem' }} />
           Reply
