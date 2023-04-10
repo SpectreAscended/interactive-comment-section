@@ -3,6 +3,7 @@ import CommentCard from './CommentCard';
 import { Comment } from '../types';
 import { useSubmit } from 'react-router-dom';
 import Modal from './UI/Modal';
+import { AnimatePresence } from 'framer-motion';
 import { useAppSelector } from '../hooks/stateHooks';
 import { useDispatch } from 'react-redux';
 import { uiActions } from '../store/uiSlice';
@@ -48,16 +49,18 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
 
   return (
     <section className="comment-list">
-      {modalOpen && (
-        <Modal
-          title="Delete comment"
-          message="Are you sure?"
-          onPrimary={deleteComment}
-          onSecondary={() => {
-            dispatch(uiActions.closeModal());
-          }}
-        />
-      )}
+      <AnimatePresence initial={false} mode="sync">
+        {modalOpen && (
+          <Modal
+            title="Delete comment"
+            message="Are you sure?"
+            onPrimary={deleteComment}
+            onSecondary={() => {
+              dispatch(uiActions.closeModal());
+            }}
+          />
+        )}
+      </AnimatePresence>
       {error && (
         <p className="error-message" style={{ maxWidth: '30rem' }}>
           Could not delete comment
