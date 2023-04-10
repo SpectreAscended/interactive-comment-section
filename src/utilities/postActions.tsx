@@ -43,8 +43,6 @@ export const deleteComment = async (
 
   console.log(currentUser.uid, commentUid);
   if (currentUser.uid !== commentUid) return;
-  console.log('running');
-
   try {
     const res = await fetch(`${baseUrl}/${commentId}.json`, {
       method: 'DELETE',

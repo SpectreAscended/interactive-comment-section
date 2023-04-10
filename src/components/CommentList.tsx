@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import CommentCard from './CommentCard';
-import { Comment, CommentDeleteData } from '../types';
+import { Comment } from '../types';
 import { useSubmit } from 'react-router-dom';
 import Modal from './UI/Modal';
 import { useAppSelector } from '../hooks/stateHooks';
@@ -12,6 +13,7 @@ interface CommentListProps {
 }
 
 const CommentList: React.FC<CommentListProps> = ({ comments }) => {
+  const [error, setError] = useState<string | null>(null);
   const submit = useSubmit();
   const dispatch = useDispatch();
   const modalOpen = useAppSelector(state => state.ui.modalOpen);
@@ -19,9 +21,12 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
 
   const deleteComment = () => {
     const formData = new FormData();
-    if (!modalData) return;
+    if (!modalData.commentUid) {
+      setError('Could not delete comment');
+      dispatch(uiActions.closeModal());
+      return;
+    }
 
-    // console.log(commentData.commentId, commentData.commentUid);
     formData.append('comment-id', modalData.commentId);
     formData.append('comment-uid', modalData.commentUid);
 
@@ -30,11 +35,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
     dispatch(uiActions.resetModalData());
   };
 
-  // const deleteCommentHandler = () => {
-  //   deleteComment()
-  // }
-
-  const commentListItems = comments.map(comment => {
+  const commentListArr = comments.map(comment => {
     return (
       <li key={comment.id}>
         <CommentCard comment={comment} onDelete={deleteComment} />
@@ -42,9 +43,8 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
     );
   });
 
-  // const commentListItems = commentListArr.slice();
-  // commentListItems.reverse();
-  // const commentListItems = null;
+  const commentListItems = commentListArr.slice();
+  commentListItems.reverse();
 
   return (
     <section className="comment-list">
@@ -57,6 +57,11 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
             dispatch(uiActions.closeModal());
           }}
         />
+      )}
+      {error && (
+        <p className="error-message" style={{ maxWidth: '30rem' }}>
+          Could not delete comment
+        </p>
       )}
       {<ul>{commentListItems ? commentListItems : <CommentCard />}</ul>}
     </section>
