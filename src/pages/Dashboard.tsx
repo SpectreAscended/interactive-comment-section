@@ -17,7 +17,7 @@ export default DashboardPage;
 export const action = async ({ request }: any) => {
   const formData = await request.formData();
   const currentUser = auth.currentUser;
-  console.log(request);
+
   if (request.method === 'POST') {
     const content = await formData.get('comment-input');
     await addComment(content, currentUser);

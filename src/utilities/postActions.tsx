@@ -41,7 +41,6 @@ export const deleteComment = async (
 ) => {
   if (!currentUser) return;
 
-  console.log(currentUser.uid, commentUid);
   if (currentUser.uid !== commentUid) return;
   try {
     const res = await fetch(`${baseUrl}/${commentId}.json`, {
@@ -56,3 +55,5 @@ export const deleteComment = async (
     }
   }
 };
+
+export const changeRating = async () => {};

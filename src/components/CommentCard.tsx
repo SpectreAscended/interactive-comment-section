@@ -21,7 +21,7 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment, onDelete }) => {
 
   return (
     <article className="comment-card">
-      <Counter defaultCount={comment.rating} />
+      <Counter defaultCount={comment.rating} comment={comment} />
       <div className="comment-card__content">
         <CommentCardUser comment={comment} onDelete={onDelete} />
         <p className="comment-card__comment-body">{comment.content}</p>

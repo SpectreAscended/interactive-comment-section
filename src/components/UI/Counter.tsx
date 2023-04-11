@@ -1,19 +1,48 @@
 import { useState } from 'react';
+import { Comment } from '../../types';
+import { json } from 'react-router-dom';
 import './counter.scss';
 
 interface CounterProps {
   defaultCount: number;
+  comment: Comment;
 }
 
-const Counter: React.FC<CounterProps> = ({ defaultCount }) => {
-  const [count, setCount] = useState(defaultCount);
+const baseUrl = import.meta.env.VITE_FIREBASE_DB_HOST;
+
+const Counter: React.FC<CounterProps> = ({ comment }) => {
+  const [count, setCount] = useState(comment.rating);
+
+  const updateRating = async (newCount: number) => {
+    const url = `${baseUrl}/${comment.id}.json`;
+    console.log(url);
+    const options = {
+      method: 'PATCH',
+      headers: { ContentType: 'application/json' },
+      body: JSON.stringify({ rating: count + newCount }),
+    };
+    try {
+      const res = await fetch(url, options);
+      if (!res.ok)
+        throw json({
+          message: 'An error occured with updating comment rating',
+          status: 500,
+        });
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log(err);
+      }
+    }
+  };
 
   const increaseCount = () => {
     setCount(prevCount => prevCount + 1);
+    updateRating(1);
   };
 
   const decreaseCount = () => {
     setCount(prevCount => prevCount - 1);
+    updateRating(-1);
   };
 
   return (
