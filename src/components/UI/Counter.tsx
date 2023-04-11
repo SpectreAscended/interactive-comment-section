@@ -10,6 +10,8 @@ interface CounterProps {
 
 const baseUrl = import.meta.env.VITE_FIREBASE_DB_HOST;
 
+// TODO Need to figure out a way to only allow one upvote or 1 downvote per post per user.
+
 const Counter: React.FC<CounterProps> = ({ comment }) => {
   const [count, setCount] = useState(comment.rating);
 
