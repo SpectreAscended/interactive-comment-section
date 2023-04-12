@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Comment } from '../../types';
 import { json } from 'react-router-dom';
+import { auth } from '../../firebase';
 import './counter.scss';
 
 interface CounterProps {
@@ -14,6 +15,8 @@ const baseUrl = import.meta.env.VITE_FIREBASE_DB_HOST;
 
 const Counter: React.FC<CounterProps> = ({ comment }) => {
   const [count, setCount] = useState(comment.rating);
+  // const currentUser = auth.currentUser;
+  // console.log(currentUser);
 
   const updateRating = async (newCount: number) => {
     const url = `${baseUrl}/${comment.id}.json`;
