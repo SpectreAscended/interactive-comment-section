@@ -12,20 +12,16 @@ import { useAppSelector } from '../hooks/stateHooks';
 
 interface CommentCardUserProps {
   comment: Comment;
-  onDelete?: () => void;
 }
 
 //  BUGBUGBUGLECBUGTODO  Delete is not functioning properly. It just refers to the first form rendered to the page regardless of what is clicked.  Issue either arose when I split it into its own component, or when I started to get the modal involved. Probably try disabling the modal and see if that changes the behavior, if not refactor this code back into its original place.
 
 //LEC Clue --- The problem goes away when modal is disabled.  Figure out a different way to handle this.
 
-const CommentCardUser: React.FC<CommentCardUserProps> = ({
-  comment,
-  onDelete,
-}) => {
+const CommentCardUser: React.FC<CommentCardUserProps> = ({ comment }) => {
   const userData = auth.currentUser;
   const dispatch = useDispatch();
-  const replyOpen = useAppSelector(state => state.ui.replyOpen);
+  const replyOpen = useAppSelector(state => state.ui.replyInput);
 
   const [userImg, setUserImg] = useState<string | null>(null);
 
@@ -37,9 +33,11 @@ const CommentCardUser: React.FC<CommentCardUserProps> = ({
     // If the reply input isn't open, open the reply input
     if (!replyOpen.menuOpen) {
       dispatch(uiActions.openReply(comment.id));
+
       // If the reply input IS open, but you are clicking a different comment than the one inwhich the reply is open for, close the original reply input and open for the new comment
-    } else if (replyOpen && replyOpen.commentId !== comment.id) {
+    } else if (replyOpen.menuOpen && replyOpen.commentId !== comment.id) {
       dispatch(uiActions.openReply(comment.id));
+
       // Close reply input
     } else {
       dispatch(uiActions.closeReply());

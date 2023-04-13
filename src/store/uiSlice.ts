@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 interface InitialUiState {
   modalOpen: boolean;
   modalData: any;
-  replyOpen: {
+  replyInput: {
     menuOpen: boolean;
     commentId: string | null;
   };
@@ -12,7 +12,7 @@ interface InitialUiState {
 const initialUiState: InitialUiState = {
   modalOpen: false,
   modalData: {},
-  replyOpen: {
+  replyInput: {
     menuOpen: false,
     commentId: null,
   },
@@ -35,10 +35,10 @@ const uiSlice = createSlice({
       state.modalData = {};
     },
     openReply(state, action) {
-      state.replyOpen = { menuOpen: true, commentId: action.payload };
+      state.replyInput = { menuOpen: true, commentId: action.payload };
     },
     closeReply(state) {
-      state.replyOpen = { menuOpen: false, commentId: null };
+      state.replyInput = { menuOpen: false, commentId: null };
     },
   },
 });
