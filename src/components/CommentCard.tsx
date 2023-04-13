@@ -1,14 +1,18 @@
 import Counter from './UI/Counter';
-import { Comment, CommentDeleteData } from '../types';
+import { Comment } from '../types';
+import CommentInput from './CommentInput';
 import CommentCardUser from './CommentCardUser';
+import { useAppSelector } from '../hooks/stateHooks';
 import './commentCard.scss';
 
 interface CommentCardProps {
   comment?: Comment;
-  onDelete?: (a: CommentDeleteData) => void;
+  onDelete?: () => void;
 }
 
 const CommentCard: React.FC<CommentCardProps> = ({ comment, onDelete }) => {
+  const replyOpen = useAppSelector(state => state.ui.replyOpen);
+
   if (!comment) {
     return (
       <article className="comment-card">
@@ -20,13 +24,20 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment, onDelete }) => {
   }
 
   return (
-    <article className="comment-card">
-      <Counter defaultCount={comment.rating} comment={comment} />
-      <div className="comment-card__content">
-        <CommentCardUser comment={comment} onDelete={onDelete} />
-        <p className="comment-card__comment-body">{comment.content}</p>
-      </div>
-    </article>
+    <div className="comment-card">
+      <article className="comment-card__comment">
+        <Counter defaultCount={comment.rating} comment={comment} />
+        <div className="comment-card__comment-content">
+          <CommentCardUser comment={comment} onDelete={onDelete} />
+          <p className="comment-card__comment-body">{comment.content}</p>
+        </div>
+      </article>
+      {replyOpen.menuOpen && replyOpen.commentId === comment.id && (
+        <div className="comment-card__reply">
+          <CommentInput type="reply" />
+        </div>
+      )}
+    </div>
   );
 };
 

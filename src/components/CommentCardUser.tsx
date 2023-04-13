@@ -5,14 +5,14 @@ import { Comment } from '../types';
 import { uiActions } from '../store/uiSlice';
 import formatDate from '../utilities/formatDate';
 import { useDispatch } from 'react-redux';
-import { CommentDeleteData } from '../types';
 import { auth, storage } from '../firebase';
 import { list, getDownloadURL, ref } from 'firebase/storage';
 import './commentCardUser.scss';
+import { useAppSelector } from '../hooks/stateHooks';
 
 interface CommentCardUserProps {
   comment: Comment;
-  onDelete?: (a: CommentDeleteData) => void;
+  onDelete?: () => void;
 }
 
 //  BUGBUGBUGLECBUGTODO  Delete is not functioning properly. It just refers to the first form rendered to the page regardless of what is clicked.  Issue either arose when I split it into its own component, or when I started to get the modal involved. Probably try disabling the modal and see if that changes the behavior, if not refactor this code back into its original place.
@@ -25,12 +25,26 @@ const CommentCardUser: React.FC<CommentCardUserProps> = ({
 }) => {
   const userData = auth.currentUser;
   const dispatch = useDispatch();
+  const replyOpen = useAppSelector(state => state.ui.replyOpen);
 
   const [userImg, setUserImg] = useState<string | null>(null);
 
   const userComment = userData && userData.uid === comment?.userData.uid;
 
   const commentCreatedAt = formatDate(comment.createdAt);
+
+  const replyHandler = () => {
+    // If the reply input isn't open, open the reply input
+    if (!replyOpen.menuOpen) {
+      dispatch(uiActions.openReply(comment.id));
+      // If the reply input IS open, but you are clicking a different comment than the one inwhich the reply is open for, close the original reply input and open for the new comment
+    } else if (replyOpen && replyOpen.commentId !== comment.id) {
+      dispatch(uiActions.openReply(comment.id));
+      // Close reply input
+    } else {
+      dispatch(uiActions.closeReply());
+    }
+  };
 
   // This makes too many requests.  Figure out a way to stop that.
   const loadUserImg = async () => {
@@ -94,7 +108,7 @@ const CommentCardUser: React.FC<CommentCardUserProps> = ({
             </button>
           )}
         </div>
-        <button className="user-data__reply">
+        <button className="user-data__reply" onClick={replyHandler}>
           <FontAwesomeIcon icon={faReply} style={{ marginRight: '.5rem' }} />
           Reply
         </button>

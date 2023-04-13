@@ -4,7 +4,11 @@ import { Form, useSubmit, useNavigate } from 'react-router-dom';
 import Button from './UI/Button';
 import './commentInput.scss';
 
-const CommentInput: React.FC = () => {
+interface CommentInputProps {
+  type?: string;
+}
+
+const CommentInput: React.FC<CommentInputProps> = ({ type = 'post' }) => {
   const { userData } = useContext(authContext);
   const navigate = useNavigate();
   const submit = useSubmit();
@@ -58,7 +62,9 @@ const CommentInput: React.FC = () => {
           value={inputValue}
           onChange={inputHander}
         />
-        <Button type="submit">Send</Button>
+        <Button type="submit">
+          {type === 'reply' ? 'Reply' : type === 'edit' ? 'Edit' : 'Send'}
+        </Button>
       </div>
     </Form>
   );
