@@ -107,11 +107,16 @@ const CommentCardUser: React.FC<CommentCardUserProps> = ({
               Delete
             </button>
           )}
+          {userData && (
+            <button className="user-data__reply" onClick={replyHandler}>
+              <FontAwesomeIcon
+                icon={faReply}
+                style={{ marginRight: '.5rem' }}
+              />
+              Reply
+            </button>
+          )}
         </div>
-        <button className="user-data__reply" onClick={replyHandler}>
-          <FontAwesomeIcon icon={faReply} style={{ marginRight: '.5rem' }} />
-          Reply
-        </button>
       </div>
     </>
   );
