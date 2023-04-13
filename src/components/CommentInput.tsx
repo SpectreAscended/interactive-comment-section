@@ -1,14 +1,19 @@
 import { useContext, useEffect, useState } from 'react';
 import { authContext } from '../context/AuthContext';
 import { Form, useSubmit, useNavigate } from 'react-router-dom';
+import { Comment } from '../types/index';
 import Button from './UI/Button';
 import './commentInput.scss';
 
 interface CommentInputProps {
-  type?: string;
+  type?: 'reply' | 'post' | 'edit';
+  editComment?: Comment;
 }
 
-const CommentInput: React.FC<CommentInputProps> = ({ type = 'post' }) => {
+const CommentInput: React.FC<CommentInputProps> = ({
+  type = 'post',
+  editComment,
+}) => {
   const { userData } = useContext(authContext);
   const navigate = useNavigate();
   const submit = useSubmit();
@@ -19,7 +24,11 @@ const CommentInput: React.FC<CommentInputProps> = ({ type = 'post' }) => {
     if (userData.userImage) {
       setUserImg(userData.userImage);
     }
-  }, [userData.userImage]);
+
+    if (type === 'edit' && editComment) {
+      setInputValue(editComment.content);
+    }
+  }, [userData.userImage, editComment]);
 
   const inputHander = (e: React.FormEvent<HTMLTextAreaElement>) => {
     setInputValue(e.currentTarget.value);
