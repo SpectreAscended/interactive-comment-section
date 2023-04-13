@@ -7,6 +7,12 @@ interface InitialUiState {
     menuOpen: boolean;
     commentId: string | null;
   };
+  editInput: {
+    menuOpen: boolean;
+    commentId: string | null;
+    commentUid: string | null;
+    currentUid: string | null;
+  };
 }
 
 const initialUiState: InitialUiState = {
@@ -15,6 +21,12 @@ const initialUiState: InitialUiState = {
   replyInput: {
     menuOpen: false,
     commentId: null,
+  },
+  editInput: {
+    menuOpen: false,
+    commentId: null,
+    commentUid: null,
+    currentUid: null,
   },
 };
 
