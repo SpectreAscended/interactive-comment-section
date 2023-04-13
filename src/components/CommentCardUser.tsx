@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faReply, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faReply, faTrash, faPen } from '@fortawesome/free-solid-svg-icons';
 import { Comment } from '../types';
 import { uiActions } from '../store/uiSlice';
 import formatDate from '../utilities/formatDate';
@@ -21,7 +21,8 @@ interface CommentCardUserProps {
 const CommentCardUser: React.FC<CommentCardUserProps> = ({ comment }) => {
   const userData = auth.currentUser;
   const dispatch = useDispatch();
-  const replyOpen = useAppSelector(state => state.ui.replyInput);
+  const replyInput = useAppSelector(state => state.ui.replyInput);
+  const editInput = useAppSelector(state => state.ui.editInput);
 
   const [userImg, setUserImg] = useState<string | null>(null);
 
@@ -31,16 +32,26 @@ const CommentCardUser: React.FC<CommentCardUserProps> = ({ comment }) => {
 
   const replyHandler = () => {
     // If the reply input isn't open, open the reply input
-    if (!replyOpen.menuOpen) {
+    if (!replyInput.menuOpen) {
       dispatch(uiActions.openReply(comment.id));
 
       // If the reply input IS open, but you are clicking a different comment than the one inwhich the reply is open for, close the original reply input and open for the new comment
-    } else if (replyOpen.menuOpen && replyOpen.commentId !== comment.id) {
+    } else if (replyInput.menuOpen && replyInput.commentId !== comment.id) {
       dispatch(uiActions.openReply(comment.id));
 
       // Close reply input
     } else {
       dispatch(uiActions.closeReply());
+    }
+  };
+
+  const editHandler = () => {
+    if (!editInput.menuOpen) {
+      dispatch(uiActions.openEdit(comment.id));
+    } else if (editInput.menuOpen && editInput.commentId !== comment.id) {
+      dispatch(uiActions.openEdit(comment.id));
+    } else if (editInput.menuOpen) {
+      dispatch(uiActions.closeEdit());
     }
   };
 
@@ -85,25 +96,38 @@ const CommentCardUser: React.FC<CommentCardUserProps> = ({ comment }) => {
         <span className="user-data__created-at">{commentCreatedAt}</span>
         <div className="user-data__controls">
           {userComment && (
-            <button
-              className="user-data__delete"
-              type="button"
-              onClick={() => {
-                dispatch(uiActions.openModal());
-                dispatch(
-                  uiActions.setModalData({
-                    commentId: comment.id,
-                    commentUid: comment.userData.uid,
-                  })
-                );
-              }}
-            >
-              <FontAwesomeIcon
-                icon={faTrash}
-                style={{ marginRight: '.5rem' }}
-              />
-              Delete
-            </button>
+            <>
+              <button
+                type="button"
+                className="user-data__edit"
+                onClick={editHandler}
+              >
+                <FontAwesomeIcon
+                  icon={faPen}
+                  style={{ marginRight: '.5rem' }}
+                />
+                Edit
+              </button>
+              <button
+                className="user-data__delete"
+                type="button"
+                onClick={() => {
+                  dispatch(uiActions.openModal());
+                  dispatch(
+                    uiActions.setModalData({
+                      commentId: comment.id,
+                      commentUid: comment.userData.uid,
+                    })
+                  );
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  style={{ marginRight: '.5rem' }}
+                />
+                Delete
+              </button>
+            </>
           )}
           {userData && (
             <button className="user-data__reply" onClick={replyHandler}>

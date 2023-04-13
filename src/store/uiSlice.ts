@@ -7,12 +7,10 @@ interface InitialUiState {
     menuOpen: boolean;
     commentId: string | null;
   };
-  // editInput: {
-  //   menuOpen: boolean;
-  //   commentId: string | null;
-  //   commentUid: string | null;
-  //   currentUid: string | null;
-  // };
+  editInput: {
+    menuOpen: boolean;
+    commentId: string | null;
+  };
 }
 
 const initialUiState: InitialUiState = {
@@ -22,12 +20,10 @@ const initialUiState: InitialUiState = {
     menuOpen: false,
     commentId: null,
   },
-  // editInput: {
-  //   menuOpen: false,
-  //   commentId: null,
-  //   commentUid: null,
-  //   currentUid: null,
-  // },
+  editInput: {
+    menuOpen: false,
+    commentId: null,
+  },
 };
 
 const uiSlice = createSlice({
@@ -51,6 +47,12 @@ const uiSlice = createSlice({
     },
     closeReply(state) {
       state.replyInput = { menuOpen: false, commentId: null };
+    },
+    openEdit(state, action) {
+      state.editInput = { menuOpen: true, commentId: action.payload };
+    },
+    closeEdit(state) {
+      state.editInput = { menuOpen: false, commentId: null };
     },
   },
 });

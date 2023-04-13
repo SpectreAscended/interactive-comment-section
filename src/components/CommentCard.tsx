@@ -10,7 +10,8 @@ interface CommentCardProps {
 }
 
 const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
-  const replyOpen = useAppSelector(state => state.ui.replyInput);
+  const replyInput = useAppSelector(state => state.ui.replyInput);
+  const editInput = useAppSelector(state => state.ui.editInput);
 
   if (!comment) {
     return (
@@ -31,9 +32,14 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
           <p className="comment-card__comment-body">{comment.content}</p>
         </div>
       </article>
-      {replyOpen.menuOpen && replyOpen.commentId === comment.id && (
+      {replyInput.menuOpen && replyInput.commentId === comment.id && (
         <div className="comment-card__reply">
-          <CommentInput type="reply" editComment={comment} />
+          <CommentInput type="reply" />
+        </div>
+      )}
+      {editInput.menuOpen && editInput.commentId === comment.id && (
+        <div className="comment-card__reply">
+          <CommentInput type="edit" editComment={comment} />
         </div>
       )}
     </div>

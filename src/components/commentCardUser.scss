@@ -58,7 +58,8 @@
     }
   }
 
-  &__reply {
+  &__reply,
+  &__edit {
     color: var(--color-moderate-blue);
 
     &:hover {
