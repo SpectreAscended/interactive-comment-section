@@ -39,7 +39,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
   const commentListArr = comments.map(comment => {
     return (
       <li key={comment.id}>
-        <CommentCard comment={comment} onDelete={deleteComment} />
+        <CommentCard comment={comment} />
       </li>
     );
   });

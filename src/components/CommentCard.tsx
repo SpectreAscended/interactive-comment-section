@@ -7,11 +7,10 @@ import './commentCard.scss';
 
 interface CommentCardProps {
   comment?: Comment;
-  onDelete?: () => void;
 }
 
-const CommentCard: React.FC<CommentCardProps> = ({ comment, onDelete }) => {
-  const replyOpen = useAppSelector(state => state.ui.replyOpen);
+const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
+  const replyOpen = useAppSelector(state => state.ui.replyInput);
 
   if (!comment) {
     return (
@@ -28,7 +27,7 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment, onDelete }) => {
       <article className="comment-card__comment">
         <Counter defaultCount={comment.rating} comment={comment} />
         <div className="comment-card__comment-content">
-          <CommentCardUser comment={comment} onDelete={onDelete} />
+          <CommentCardUser comment={comment} />
           <p className="comment-card__comment-body">{comment.content}</p>
         </div>
       </article>
