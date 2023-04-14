@@ -2,7 +2,7 @@ import { json, redirect, useLoaderData } from 'react-router-dom';
 import { auth } from '../firebase';
 import { Comment } from '../types';
 import Dashboard from '../components/Dashboard';
-import { addComment, deleteComment } from '../utilities/postActions';
+import { postComment, deleteComment } from '../utilities/postActions';
 
 const baseUrl = import.meta.env.VITE_FIREBASE_DB_HOST;
 
@@ -20,14 +20,14 @@ export const action = async ({ request }: any) => {
 
   if (request.method === 'POST') {
     const content = await formData.get('comment-input');
-    await addComment(content, currentUser, 'POST');
+    await postComment(content, currentUser, 'POST');
     return redirect('/');
   }
 
   if (request.method === 'PATCH') {
     const content = await formData.get('comment-input');
     const commentId = await formData.get('comment-id');
-    await addComment(content, currentUser, 'PATCH', commentId);
+    await postComment(content, currentUser, 'PATCH', commentId);
     return redirect('/');
   }
 

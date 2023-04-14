@@ -1,6 +1,6 @@
 const baseUrl = import.meta.env.VITE_FIREBASE_DB_HOST;
 
-export const addComment = async (
+export const postComment = async (
   content: string,
   currentUser: any,
   method: 'POST' | 'PATCH',
