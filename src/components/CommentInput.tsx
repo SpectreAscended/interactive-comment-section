@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { authContext } from '../context/AuthContext';
+import { useDispatch } from 'react-redux';
+import { uiActions } from '../store/uiSlice';
 import { Form, useSubmit, useNavigate } from 'react-router-dom';
 import { Comment } from '../types/index';
 import Button from './UI/Button';
@@ -19,6 +21,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const submit = useSubmit();
   const [userImg, setUserImg] = useState<any>(userData.userImage);
   const [inputValue, setInputValue] = useState('');
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (userData.userImage) {
@@ -48,17 +51,19 @@ const CommentInput: React.FC<CommentInputProps> = ({
     }
 
     formData.append('comment-input', inputValue);
-    submit(formData, { method: 'post' });
+
+    if (type === 'post') {
+      submit(formData, { method: 'post' });
+    } else if (type === 'edit') {
+      formData.append('comment-id', editComment!.id);
+      submit(formData, { method: 'patch' });
+      dispatch(uiActions.closeEdit());
+    }
     setInputValue('');
   };
 
   return (
-    <Form
-      className="comment-input"
-      method="post"
-      action="/"
-      onSubmit={submitCommentHandler}
-    >
+    <Form className="comment-input" onSubmit={submitCommentHandler}>
       <figure className="comment-input__user-img">
         {userImg ? <img src={userImg} alt="user img" /> : ''}
       </figure>

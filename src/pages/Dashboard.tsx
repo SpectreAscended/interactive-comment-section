@@ -1,4 +1,4 @@
-import { json, redirect, useNavigate, useLoaderData } from 'react-router-dom';
+import { json, redirect, useLoaderData } from 'react-router-dom';
 import { auth } from '../firebase';
 import { Comment } from '../types';
 import Dashboard from '../components/Dashboard';
@@ -20,7 +20,14 @@ export const action = async ({ request }: any) => {
 
   if (request.method === 'POST') {
     const content = await formData.get('comment-input');
-    await addComment(content, currentUser);
+    await addComment(content, currentUser, 'POST');
+    return redirect('/');
+  }
+
+  if (request.method === 'PATCH') {
+    const content = await formData.get('comment-input');
+    const commentId = await formData.get('comment-id');
+    await addComment(content, currentUser, 'PATCH', commentId);
     return redirect('/');
   }
 

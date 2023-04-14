@@ -1,6 +1,11 @@
 const baseUrl = import.meta.env.VITE_FIREBASE_DB_HOST;
 
-export const addComment = async (content: string, currentUser: any) => {
+export const addComment = async (
+  content: string,
+  currentUser: any,
+  method: 'POST' | 'PATCH',
+  commentId?: string
+) => {
   try {
     if (!currentUser) return;
 
@@ -11,21 +16,38 @@ export const addComment = async (content: string, currentUser: any) => {
       photoURL: currentUser.photoURL,
     };
 
-    const postBody = {
+    let postBody = {
       content: content,
       createdAt: new Date(),
       userData,
       rating: 1,
     };
 
-    const res = await fetch(`${baseUrl}.json`, {
-      method: 'POST',
-      headers: { ContentType: 'application/json' },
-      body: JSON.stringify(postBody),
-    });
+    baseUrl;
 
-    if (!res.ok) {
-      throw new Error('Problem posting comment');
+    if (method === 'POST') {
+      const res = await fetch(`${baseUrl}.json`, {
+        method: 'POST',
+        headers: { ContentType: 'application/json' },
+        body: JSON.stringify(postBody),
+      });
+
+      if (!res.ok) {
+        throw new Error('Problem posting comment');
+      }
+    }
+
+    if (method === 'PATCH') {
+      console.log(commentId);
+      const res = await fetch(`${baseUrl}/${commentId}.json`, {
+        method: 'PATCH',
+        headers: { ContentType: 'application/json' },
+        body: JSON.stringify({ content: content }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Problem updating comment');
+      }
     }
   } catch (err) {
     if (err instanceof Error) {
