@@ -4,11 +4,30 @@ import Button from './UI/Button';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { authContext } from '../context/AuthContext';
+import { useDispatch } from 'react-redux';
+import { uiActions } from '../store/uiSlice';
+import { useAppSelector } from '../hooks/stateHooks';
 import './header.scss';
 
 const Header: React.FC = () => {
-  const { isAuthenticated, authHandler } = useContext(authContext);
+  const { isAuthenticated } = useContext(authContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const replyInput = useAppSelector(state => state.ui.replyInput);
+  const editInput = useAppSelector(state => state.ui.editInput);
+
+  const handleSignout = () => {
+    auth.signOut();
+    navigate('/');
+
+    if (replyInput.menuOpen) {
+      dispatch(uiActions.closeReply());
+    }
+
+    if (editInput.menuOpen) {
+      dispatch(uiActions.closeEdit());
+    }
+  };
 
   return (
     <header className="header">
@@ -42,14 +61,7 @@ const Header: React.FC = () => {
           )}
           <li>
             {isAuthenticated ? (
-              <Button
-                onClick={() => {
-                  signOut(auth);
-                  navigate('/');
-                }}
-              >
-                Log out
-              </Button>
+              <Button onClick={handleSignout}>Log out</Button>
             ) : (
               <NavLink to="login" className="">
                 <Button>Log in</Button>

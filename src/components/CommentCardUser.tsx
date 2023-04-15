@@ -34,10 +34,16 @@ const CommentCardUser: React.FC<CommentCardUserProps> = ({ comment }) => {
     // If the reply input isn't open, open the reply input
     if (!replyInput.menuOpen) {
       dispatch(uiActions.openReply(comment.id));
+      if (editInput.menuOpen) {
+        dispatch(uiActions.closeEdit());
+      }
 
       // If the reply input IS open, but you are clicking a different comment than the one inwhich the reply is open for, close the original reply input and open for the new comment
     } else if (replyInput.menuOpen && replyInput.commentId !== comment.id) {
       dispatch(uiActions.openReply(comment.id));
+      if (editInput.menuOpen) {
+        dispatch(uiActions.closeEdit());
+      }
 
       // Close reply input
     } else {
@@ -48,8 +54,14 @@ const CommentCardUser: React.FC<CommentCardUserProps> = ({ comment }) => {
   const editHandler = () => {
     if (!editInput.menuOpen) {
       dispatch(uiActions.openEdit(comment.id));
+      if (replyInput.menuOpen) {
+        dispatch(uiActions.closeReply());
+      }
     } else if (editInput.menuOpen && editInput.commentId !== comment.id) {
       dispatch(uiActions.openEdit(comment.id));
+      if (replyInput.menuOpen) {
+        dispatch(uiActions.closeReply());
+      }
     } else if (editInput.menuOpen) {
       dispatch(uiActions.closeEdit());
     }
