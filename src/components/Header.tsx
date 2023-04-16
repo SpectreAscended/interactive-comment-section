@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Button from './UI/Button';
-import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { authContext } from '../context/AuthContext';
 import { useDispatch } from 'react-redux';
@@ -16,8 +15,8 @@ const Header: React.FC = () => {
   const replyInput = useAppSelector(state => state.ui.replyInput);
   const editInput = useAppSelector(state => state.ui.editInput);
 
-  const handleSignout = () => {
-    auth.signOut();
+  const handleSignout = async () => {
+    await auth.signOut();
     navigate('/');
 
     if (replyInput.menuOpen) {
