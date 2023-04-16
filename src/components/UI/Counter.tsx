@@ -15,12 +15,9 @@ const baseUrl = import.meta.env.VITE_FIREBASE_DB_HOST;
 
 const Counter: React.FC<CounterProps> = ({ comment }) => {
   const [count, setCount] = useState(comment.rating);
-  // const currentUser = auth.currentUser;
-  // console.log(currentUser);
 
   const updateRating = async (newCount: number) => {
     const url = `${baseUrl}/${comment.id}.json`;
-    console.log(url);
     const options = {
       method: 'PATCH',
       headers: { ContentType: 'application/json' },
