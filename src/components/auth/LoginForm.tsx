@@ -75,7 +75,6 @@ const LoginForm: React.FC = () => {
     'auth-form__input',
     emailHasError
   );
-  console.log(emailClasses);
 
   return (
     <section>
