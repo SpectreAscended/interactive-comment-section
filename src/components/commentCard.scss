@@ -8,10 +8,10 @@
     padding: 0.5rem;
     padding-bottom: 1rem;
     color: var(--color-grayish-blue);
-  }
 
-  &__content {
-    flex-basis: 90%;
+    &-content {
+      flex-basis: 90%;
+    }
   }
 
   &__no-items {
