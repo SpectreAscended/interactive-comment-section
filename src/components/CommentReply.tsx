@@ -28,7 +28,7 @@ const CommentReply: React.FC<CommentCardProps> = ({ comment }) => {
       <article className="comment-card__comment">
         <Counter defaultCount={comment.rating} comment={comment} />
         <div className="comment-card__comment-content">
-          <CommentCardUser comment={comment} />
+          <CommentCardUser comment={comment} type="reply" />
           <p className="comment-card__comment-body">{comment.content}</p>
         </div>
       </article>

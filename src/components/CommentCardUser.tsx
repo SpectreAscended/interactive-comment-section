@@ -12,13 +12,14 @@ import { useAppSelector } from '../hooks/stateHooks';
 
 interface CommentCardUserProps {
   comment: Comment;
+  type?: 'reply';
 }
 
 //  BUGBUGBUGLECBUGTODO  Delete is not functioning properly. It just refers to the first form rendered to the page regardless of what is clicked.  Issue either arose when I split it into its own component, or when I started to get the modal involved. Probably try disabling the modal and see if that changes the behavior, if not refactor this code back into its original place.
 
 //LEC Clue --- The problem goes away when modal is disabled.  Figure out a different way to handle this.
 
-const CommentCardUser: React.FC<CommentCardUserProps> = ({ comment }) => {
+const CommentCardUser: React.FC<CommentCardUserProps> = ({ comment, type }) => {
   const userData = auth.currentUser;
   const dispatch = useDispatch();
   const replyInput = useAppSelector(state => state.ui.replyInput);
@@ -143,7 +144,7 @@ const CommentCardUser: React.FC<CommentCardUserProps> = ({ comment }) => {
               </button>
             </>
           )}
-          {userData && (
+          {type !== 'reply' && userData && (
             <button className="user-data__reply" onClick={replyHandler}>
               <FontAwesomeIcon
                 icon={faReply}
