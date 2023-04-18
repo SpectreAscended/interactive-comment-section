@@ -11,6 +11,8 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ comments }) => {
   const { isAuthenticated } = useContext(authContext);
 
+  console.log(comments);
+
   return (
     <section className="dashboard">
       <CommentList comments={comments} />

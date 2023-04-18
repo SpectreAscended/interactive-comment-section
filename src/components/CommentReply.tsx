@@ -4,24 +4,14 @@ import CommentInput from './CommentInput';
 import CommentCardUser from './CommentCardUser';
 import { useAppSelector } from '../hooks/stateHooks';
 import './commentCard.scss';
-import CommentReply from './CommentReply';
 
 interface CommentCardProps {
   comment?: Comment;
 }
 
-const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
+const CommentReply: React.FC<CommentCardProps> = ({ comment }) => {
   const replyInput = useAppSelector(state => state.ui.replyInput);
   const editInput = useAppSelector(state => state.ui.editInput);
-
-  let replies = [] as Comment[];
-
-  if (comment?.replies) {
-    replies = Object.entries(comment.replies).map(reply => {
-      return { replyId: reply[0], ...reply[1] };
-    });
-  }
-  console.log(replies);
 
   if (!comment) {
     return (
@@ -52,17 +42,8 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
           <CommentInput type="edit" editComment={comment} />
         </div>
       )}
-      {replies.length > 0 && (
-        <ul className="comment-card__replies">
-          {replies.map(reply => (
-            <li key={reply.id}>
-              <CommentReply comment={reply} />
-            </li>
-          ))}
-        </ul>
-      )}
     </div>
   );
 };
 
-export default CommentCard;
+export default CommentReply;

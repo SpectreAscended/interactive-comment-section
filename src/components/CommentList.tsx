@@ -66,7 +66,11 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
           Could not delete comment
         </p>
       )}
-      {<ul>{commentListItems ? commentListItems : <CommentCard />}</ul>}
+      {
+        <ul className="comment-list__list">
+          {commentListItems ? commentListItems : <CommentCard />}
+        </ul>
+      }
     </section>
   );
 };
