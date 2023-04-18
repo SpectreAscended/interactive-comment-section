@@ -11,4 +11,5 @@ export interface Comment {
   createdAt: Date;
   rating: number;
   userData: UserData;
+  replies?: Comment[];
 }

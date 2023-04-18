@@ -20,7 +20,9 @@ export const action = async ({ request }: any) => {
 
   if (request.method === 'POST') {
     const content = await formData.get('comment-input');
-    await postComment(content, currentUser, 'POST');
+    const typeReply = await formData.get('type-reply');
+    const commentId = await formData.get('comment-id');
+    await postComment(content, currentUser, 'POST', commentId, typeReply);
     return redirect('/');
   }
 

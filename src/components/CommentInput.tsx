@@ -58,6 +58,10 @@ const CommentInput: React.FC<CommentInputProps> = ({
       formData.append('comment-id', editComment!.id);
       submit(formData, { method: 'patch' });
       dispatch(uiActions.closeEdit());
+    } else if (type === 'reply') {
+      formData.append('comment-id', editComment!.id);
+      formData.append('type-reply', 'reply');
+      submit(formData, { method: 'post' });
     }
     setInputValue('');
   };

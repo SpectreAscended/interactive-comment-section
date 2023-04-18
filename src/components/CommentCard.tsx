@@ -34,7 +34,7 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
       </article>
       {replyInput.menuOpen && replyInput.commentId === comment.id && (
         <div className="comment-card__reply">
-          <CommentInput type="reply" />
+          <CommentInput type="reply" editComment={comment} />
         </div>
       )}
       {editInput.menuOpen && editInput.commentId === comment.id && (
