@@ -67,6 +67,16 @@ const CommentCardUser: React.FC<CommentCardUserProps> = ({ comment }) => {
     }
   };
 
+  const deleteHandler = () => {
+    dispatch(uiActions.openModal());
+    dispatch(
+      uiActions.setModalData({
+        commentId: comment.id,
+        commentUid: comment.userData.uid,
+      })
+    );
+  };
+
   // This makes too many requests.  Figure out a way to stop that.
   const loadUserImg = async () => {
     const imageListRef = ref(
@@ -123,15 +133,7 @@ const CommentCardUser: React.FC<CommentCardUserProps> = ({ comment }) => {
               <button
                 className="user-data__delete"
                 type="button"
-                onClick={() => {
-                  dispatch(uiActions.openModal());
-                  dispatch(
-                    uiActions.setModalData({
-                      commentId: comment.id,
-                      commentUid: comment.userData.uid,
-                    })
-                  );
-                }}
+                onClick={deleteHandler}
               >
                 <FontAwesomeIcon
                   icon={faTrash}
