@@ -21,7 +21,6 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
       return { replyId: reply[0], ...reply[1] };
     });
   }
-  console.log(replies);
 
   if (!comment) {
     return (
@@ -54,11 +53,13 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
       )}
       {replies.length > 0 && (
         <ul className="comment-card__replies">
-          {replies.map(reply => (
-            <li key={reply.id}>
-              <CommentReply comment={reply} />
-            </li>
-          ))}
+          {replies.map(reply => {
+            return (
+              <li key={reply.replyId}>
+                <CommentReply comment={reply} />
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>

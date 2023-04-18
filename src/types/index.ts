@@ -12,4 +12,5 @@ export interface Comment {
   rating: number;
   userData: UserData;
   replies?: Comment[];
+  replyId?: string;
 }
