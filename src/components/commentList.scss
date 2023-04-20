@@ -2,5 +2,16 @@
   &__list {
     max-height: 65vh;
     overflow-y: auto;
+    padding: 0;
+
+    &::-webkit-scrollbar {
+      background-color: transparent;
+      width: 0.25rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--color-grayish-blue);
+      border-radius: 5px;
+    }
   }
 }
