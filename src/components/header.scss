@@ -1,20 +1,23 @@
 @import '../styles/mixins.scss';
+@import '../styles/globals.scss';
 
 .header {
   &__nav {
+    margin-inline: 0.5rem;
     ul {
       display: flex;
       justify-content: center;
-      gap: 4rem;
+      gap: 1rem;
       align-items: center;
-      margin: 0 1rem 0 0rem;
-      padding: 2rem 0;
+      padding: 1rem 0;
     }
 
     &-link {
       color: var(--color-moderate-blue);
-      padding: 1rem 1.5rem;
+      padding: 0.75rem 1rem;
       border: 1px solid currentColor;
+      text-transform: uppercase;
+      font-size: 0.8rem;
       border-radius: 0.5rem;
       transition: background 250ms, color 250ms ease-in-out;
 
@@ -27,6 +30,28 @@
       &--primary {
         background-color: var(--color-moderate-blue);
         color: var(--color-white);
+      }
+    }
+  }
+
+  @media screen and (min-width: $bp-mobile-large) {
+    &__nav {
+      ul {
+        gap: 2rem;
+      }
+    }
+  }
+
+  @media screen and (min-width: $bp-tablet-small) {
+    &__nav {
+      ul {
+        gap: 4rem;
+        padding: 2rem;
+      }
+
+      &-link {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
       }
     }
   }

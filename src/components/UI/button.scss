@@ -1,15 +1,16 @@
 @import '../../styles/mixins.scss';
+@import '../../styles/globals.scss';
 
 .button {
   border: none;
 
-  padding: 1rem 1.75rem;
+  padding: 0.75rem 1rem;
   border-radius: 0.45rem;
   cursor: pointer;
   transition: background 250ms;
   text-transform: uppercase;
   font-weight: 400;
-  font-size: 1rem;
+  font-size: 0.8rem;
 
   &--primary {
     background-color: var(--color-moderate-blue);
@@ -30,5 +31,10 @@
       background-color: var(--color-moderate-blue);
       color: var(--color-very-light-gray);
     }
+  }
+
+  @media screen and (min-width: $bp-tablet-small) {
+    padding: 1rem 1.75rem;
+    font-size: 1rem;
   }
 }

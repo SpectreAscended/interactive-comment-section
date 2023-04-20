@@ -67,7 +67,6 @@ const Header: React.FC = () => {
               </NavLink>
             )}
           </li>
-          <li></li>
         </ul>
       </nav>
     </header>

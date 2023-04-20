@@ -15,6 +15,15 @@
   --color-error-red: #d12f2f;
 }
 
+// Breakpoints
+
+$bp-mobile-large: 450px;
+$bp-tablet-small: 750px;
+$bp-tablet-large: 900px;
+$bp-desktop-small: 1200px;
+$bp-desktop-medium: 1500px;
+$bp-desktop-large: 1800px;
+
 *,
 *::before,
 *::after {
