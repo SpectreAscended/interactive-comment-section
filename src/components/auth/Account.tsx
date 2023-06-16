@@ -158,14 +158,14 @@ const Account: React.FC = () => {
                   onChange={imageUploadHandler}
                   style={{ display: 'none' }}
                 />
-                {img ? 'Change' : 'Choose'} image
+                {img ? 'Change' : 'Choose'} Image
               </label>
 
               <button
                 className="account__settings-link account__settings-link--primary"
                 disabled={!imageUpload}
               >
-                Upload image
+                Upload Image
               </button>
             </form>
           </li>
@@ -179,7 +179,7 @@ const Account: React.FC = () => {
               disabled={img == null}
               onClick={deleteImageHandler}
             >
-              Delete image
+              Delete Image
             </button>
           </li>
           <li
